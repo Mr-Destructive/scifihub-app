@@ -1,15 +1,18 @@
 from django.db import models
+from slugify import slugify
 from author.models import User
+from core.models import TimeStampedModel, UUIDModel
+from core.utils import get_or_set_slug
 
 from projects.models import Project
 
 
-class Book(models.Model):
+class Book(UUIDModel, TimeStampedModel):
     name = models.CharField(max_length=128, unique=True)
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="author",
+        related_name="books_written",
     )
     genre = models.CharField(max_length=128)
     project = models.ForeignKey(
@@ -19,14 +22,19 @@ class Book(models.Model):
         null=True,
         default=None,
     )
+    slug = models.SlugField(null=True, blank=True)
 
     def __str__(self):
+        self.slug = slugify(self.name)
+        book = None
+        if self.id:
+            book = Book.objects.get(id=self.id)
+        self.slug = get_or_set_slug(self, book)
         return self.name + " : by " + self.author.username
 
-
-class Section(models.Model):
+class Section(UUIDModel, TimeStampedModel):
     name = models.CharField(max_length=128)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="sections")
     order = models.PositiveSmallIntegerField()
 
     class Meta:
@@ -40,16 +48,17 @@ class Section(models.Model):
         return f"{self.book.name} -> {self.order} : {self.name}"
 
 
-class Chapter(models.Model):
+class Chapter(UUIDModel, TimeStampedModel):
     name = models.CharField(max_length=128)
     section = models.ForeignKey(
         Section, on_delete=models.CASCADE, null=True, blank=True
     )
-    book = models.ForeignKey(
+    book= models.ForeignKey(
         Book,
         on_delete=models.CASCADE,
         default=None,
         null=True,
+        related_name="chapters",
     )
     text_content = models.TextField()
     status = models.BooleanField(default=False, verbose_name="Publish")
@@ -68,9 +77,10 @@ class Chapter(models.Model):
         return f"{book_name} : {chapter_order}"
 
 
-class Revision(models.Model):
+class Revision(UUIDModel, TimeStampedModel):
     chapter = models.ForeignKey(
-         Chapter, on_delete=models.CASCADE, blank=True
+         Chapter, on_delete=models.CASCADE, blank=True,
+         related_name="revisions"
      )
     number = models.PositiveIntegerField()
 
@@ -80,11 +90,9 @@ class Revision(models.Model):
         ]
 
 
-class Draft(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+class Draft(UUIDModel, TimeStampedModel):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="drafts")
     number = models.PositiveIntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     completed_at = models.DateTimeField()
 
     class Meta:
@@ -93,8 +101,8 @@ class Draft(models.Model):
         ]
 
 
-class Notes(models.Model):
+class Notes(UUIDModel, TimeStampedModel):
     name = models.CharField(max_length=128, blank=True, null=True)
     text = models.TextField()
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True)
+    book_note = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True, related_name="notes")
 

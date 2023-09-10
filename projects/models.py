@@ -1,10 +1,13 @@
 from django.db import models
+import uuid
 from slugify import slugify
 
 from author.models import User
+from core.models import TimeStampedModel
+from core.utils import get_or_set_slug
 
 
-class Project(models.Model):
+class Project(TimeStampedModel):
 
     class visiblity_types(models.TextChoices):
         public = "public", "Public"
@@ -38,5 +41,8 @@ class Project(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name.__str__())
+        project = None
+        if self.id:
+            project = Project.objects.get(id=self.id)
+        self.slug = get_or_set_slug(self, project)
         return super().save(*args, **kwargs)
