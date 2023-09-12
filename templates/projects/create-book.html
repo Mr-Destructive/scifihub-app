@@ -1,0 +1,6 @@
+<h3>Create a new book in the project {{ project.name }}</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Book</button>
+</form>

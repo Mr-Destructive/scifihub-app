@@ -1,0 +1,7 @@
+<p>Are you sure you want to delete {{ project.name }} project?</p>
+
+<form action="{% url 'projects:delete' project.slug %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete">
+</form>
+

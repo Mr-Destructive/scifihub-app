@@ -3,6 +3,7 @@ from django.http import response
 from django.shortcuts import get_object_or_404, render
 
 from scifihub.book.models import Book
+from scifihub.book.forms import BookForm
 
 from .forms import ProjectForm, ProjectEditForm
 
@@ -60,3 +61,18 @@ def delete_project(request, slug):
     else:
         project = get_object_or_404(Project, slug=slug)
         return render(request, "projects/delete.html", {"project": project})
+
+
+def create_book(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.author = request.user
+            book.project = project
+            book.save()
+            return render(request, 'projects/detail.html', {'project': project})
+    else:
+        form = BookForm()
+        return render(request, 'projects/create-book.html', {'form': form})
