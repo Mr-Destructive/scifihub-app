@@ -1,0 +1,7 @@
+<p>Are you sure you want to delete {{ book.name }} book?</p>
+
+<form action="{% url 'books:delete' book.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete">
+</form>
+
