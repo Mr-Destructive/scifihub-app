@@ -65,14 +65,16 @@ def delete_project(request, slug):
 
 def create_book(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    if request.method == 'POST':
+    if request.method == "POST":
         form = BookForm(request.POST)
         if form.is_valid():
             book = form.save(commit=False)
             book.author = request.user
             book.project = project
             book.save()
-            return render(request, 'projects/detail.html', {'project': project})
+            return render(request, "projects/detail.html", {"project": project})
+        else:
+            return render(request, "projects/create-book.html", {"form": form})
     else:
         form = BookForm()
-        return render(request, 'projects/create-book.html', {'form': form})
+        return render(request, "projects/create-book.html", {"form": form})

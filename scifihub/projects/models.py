@@ -6,7 +6,6 @@ from scifihub.core.utils import get_or_set_slug
 
 
 class Project(TimeStampedModel):
-
     class visiblity_types(models.TextChoices):
         public = "public", "Public"
         private = "private", "Private"
@@ -24,10 +23,10 @@ class Project(TimeStampedModel):
         default=visiblity_types.private,
     )
     status = models.CharField(
-        max_length=128, 
+        max_length=128,
         choices=status_types.choices,
         default=status_types.draft,
-        null=True
+        null=True,
     )
     project_type = models.CharField(max_length=64, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

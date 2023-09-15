@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import get_object_or_404
 from slugify import slugify
 
 from scifihub.author.models import User
@@ -25,12 +26,16 @@ class Book(UUIDModel, TimeStampedModel):
     slug = models.SlugField(null=True, blank=True)
 
     def __str__(self):
-        self.slug = slugify(self.name)
-        book = None
-        if self.id:
-            book = Book.objects.get(id=self.id)
-        self.slug = get_or_set_slug(self, book)
         return self.name + " : by " + self.author.username
+
+    def save(self, *args, **kwargs):
+        book = None
+        if self.id and self.slug:
+            book = get_object_or_404(Book, id=self.id)
+        self.slug = get_or_set_slug(self, book)
+        print(self.slug)
+        return super().save(*args, **kwargs)
+
 
 class Section(UUIDModel, TimeStampedModel):
     name = models.CharField(max_length=128)
@@ -53,7 +58,7 @@ class Chapter(UUIDModel, TimeStampedModel):
     section = models.ForeignKey(
         Section, on_delete=models.CASCADE, null=True, blank=True
     )
-    book= models.ForeignKey(
+    book = models.ForeignKey(
         Book,
         on_delete=models.CASCADE,
         default=None,
@@ -79,9 +84,8 @@ class Chapter(UUIDModel, TimeStampedModel):
 
 class Revision(UUIDModel, TimeStampedModel):
     chapter = models.ForeignKey(
-         Chapter, on_delete=models.CASCADE, blank=True,
-         related_name="revisions"
-     )
+        Chapter, on_delete=models.CASCADE, blank=True, related_name="revisions"
+    )
     number = models.PositiveIntegerField()
 
     class Meta:
@@ -104,5 +108,6 @@ class Draft(UUIDModel, TimeStampedModel):
 class Notes(UUIDModel, TimeStampedModel):
     name = models.CharField(max_length=128, blank=True, null=True)
     text = models.TextField()
-    book_note = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True, related_name="notes")
-
+    book_note = models.ForeignKey(
+        Book, on_delete=models.CASCADE, blank=True, related_name="notes"
+    )

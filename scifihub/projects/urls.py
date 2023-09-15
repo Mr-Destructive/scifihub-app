@@ -10,4 +10,5 @@ urlpatterns = [
     path("p/<slug:slug>/", views.detail_project, name="detail"),
     path("p/update/<slug:slug>/", views.update_project, name="edit"),
     path("p/delete/<slug:slug>/", views.delete_project, name="delete"),
+    path('p/create-book/<slug:slug>/', views.create_book, name='create-book'),
 ]

@@ -1,3 +1,4 @@
+<script src="https://unpkg.com/htmx.org@1.9.5" integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" crossorigin="anonymous"></script>
 <h2>{{ project.name }}</h2>
 <h3>Author: {{ project.author.full_name }}</h3>
 <p>{{ project.description }}</p>
@@ -5,13 +6,7 @@
 <a href="{% url 'projects:edit' project.slug %}">Edit</a>
 <a href="{% url 'projects:delete' project.slug %}">Delete</a>
 <a href="{% url 'projects:create-book' project.slug %}">Add a book</a>
-{% if books %}
-    <h3>Books</h3>
-    <ul>
-    {% for book in books %}
-    <li><a href="{% url 'books:detail' book.slug %}">{{ book.name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No books yet!</p>
-{% endif %}
+<div
+    hx-get="{% url 'books:list' %}"
+    hx-trigger="load"
+></div>

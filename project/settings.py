@@ -13,7 +13,10 @@ SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost',]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+]
 
 APPEND_SLASH = True
 
@@ -24,7 +27,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "scifihub.author",
     "scifihub.book",
     "scifihub.core",
@@ -103,3 +105,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "author.User"
 
+LOGIN_REDIRECT_URL = "/"
