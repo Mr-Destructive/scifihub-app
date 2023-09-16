@@ -1,5 +1,7 @@
 from django.forms import ModelForm
 
+from scifihub.projects.models import Project
+
 from .models import Book, Chapter
 
 
@@ -13,6 +15,12 @@ class BookForm(ModelForm):
             "completed_at",
         ]
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields["project"].queryset = Project.objects.filter(author=user)
+
 
 class ChapterForm(ModelForm):
     class Meta:
@@ -24,3 +32,9 @@ class ChapterForm(ModelForm):
             "completed_at",
             "section",
         ]
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields["project"].queryset = Chapter.objects.filter(author=user)

@@ -8,3 +8,5 @@ urlpatterns = [
     path("projects/", include("scifihub.projects.urls")),
     path("books/", include("scifihub.book.urls")),
 ]
+
+handler404 = "scifihub.core.views.custom_404"

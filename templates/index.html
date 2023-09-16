@@ -12,9 +12,9 @@
         {% endif %}
 
     </ul>
-    <div 
-        hx-get="{% url 'projects:list' %}" 
+    <div
+        hx-get="{% url 'projects:list' %}"
         hx-trigger="load"
-        hx-swap="outerHTML" 
+        hx-swap="outerHTML"
     ></div>
 {% endblock %}

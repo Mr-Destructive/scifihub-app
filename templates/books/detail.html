@@ -3,8 +3,8 @@
 <a href="{% url 'books:edit' book.slug %}">Edit</a>
 <a href="{% url 'books:delete' book.slug %}">Delete</a>
 
-<button 
-    hx-get="{% url 'books:create-chapter' book.slug %}" 
+<button
+    hx-get="{% url 'books:create-chapter' book.slug %}"
     hx-target="#chapters"
     hx-swap="outerHTML"
 >Add a chapter</button>

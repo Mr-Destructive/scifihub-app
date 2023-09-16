@@ -1,5 +1,4 @@
 from django.db import models
-from django.template.defaultfilters import default
 
 from scifihub.author.models import User
 from scifihub.book.models import Book
