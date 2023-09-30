@@ -1,0 +1,5 @@
+<form method="post" hx-post="{% url 'books:chapter-write' book.slug chapter.slug %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Write Chapter</button>
+</form>

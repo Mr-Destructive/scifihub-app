@@ -18,4 +18,9 @@ urlpatterns = [
         views.chapter_detail,
         name="chapter-detail",
     ),
+    path(
+        "b/<slug:book_slug>/chapter/<slug:chp_slug>/write/",
+        views.chapeter_write,
+        name="chapter-write",
+    ),
 ]

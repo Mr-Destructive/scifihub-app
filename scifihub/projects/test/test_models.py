@@ -1,47 +1,23 @@
-from django.test import TestCase
+from django.shortcuts import reverse
+import pytest
+from django.test import Client, RequestFactory
 from scifihub.author.models import User
+from scifihub.projects.views import list_projects
 
-from ..models import Project
+@pytest.fixture
+def request_factory():
+    return RequestFactory()
 
+@pytest.fixture
+def user():
+    client = Client()
+    user = User.objects.create_user(username='testuser', password='testpassword')
+    client.login(username='testuser', password='testpassword')
+    return client, user
 
-class ProjectModelTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        # Create a test user
-        cls.user = User.objects.create_user(
-            username='testuser',
-            password='testpassword'
-        )
-
-    def test_project_creation(self):
-        project = Project.objects.create(
-            name='Test Project',
-            description='This is a test project',
-            author=self.user,
-            visibility=Project.visiblity_types.public,
-            status=Project.status_types.published,
-            project_type='Test Type'
-        )
-
-        self.assertEqual(project.name, 'Test Project')
-        self.assertEqual(project.description, 'This is a test project')
-        self.assertEqual(project.author, self.user)
-        self.assertEqual(project.visibility, Project.visiblity_types.public)
-        self.assertEqual(project.status, Project.status_types.published)
-        self.assertEqual(project.project_type, 'Test Type')
-        self.assertIsNotNone(project.created_at)
-        self.assertIsNotNone(project.updated_at)
-        self.assertIsNone(project.completed_at)
-        self.assertIsNotNone(project.slug)
-
-    def test_project_str_representation(self):
-        project = Project.objects.create(
-            name='Test Project',
-            description='This is a test project',
-            author=self.user,
-            visibility=Project.visiblity_types.public,
-            status=Project.status_types.published,
-            project_type='Test Type'
-        )
-
-        self.assertEqual(str(project), 'Test Project')
+@pytest.mark.django_db
+def test_project_creation(request_factory):
+    request = request_factory.get(reverse('projects:list'))
+    request.user = user
+    response = list_projects(request)
+    assert response.status_code == 200

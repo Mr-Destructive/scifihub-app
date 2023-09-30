@@ -38,3 +38,9 @@ class ChapterForm(ModelForm):
         super().__init__(*args, **kwargs)
         if user:
             self.fields["project"].queryset = Chapter.objects.filter(author=user)
+
+
+class ChapterEditForm(ModelForm):
+    class Meta:
+        model = Chapter
+        fields = ["text_content",]

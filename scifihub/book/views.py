@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from scifihub.core.middlewares import author_access_required
 
-from .forms import BookForm, ChapterForm
+from .forms import BookForm, ChapterForm, ChapterEditForm
 from .models import Book, Chapter
 
 
@@ -94,4 +94,20 @@ def chapter_delete(request, book_slug, chp_slug):
         request,
         "books/chapters/delete-chapter.html",
         {"chapter": chapter, "book": book},
+    )
+
+
+def chapeter_write(request, book_slug, chp_slug):
+    book = get_object_or_404(Book, slug=book_slug)
+    chapter = get_object_or_404(Chapter, id=chp_slug)
+    form = ChapterEditForm(instance=chapter)
+    if request.method == "PATCH":
+        form = ChapterEditForm(request.POST, instance=chapter)
+        if form.is_valid():
+            form.save()
+            return redirect("books:chapter", book_slug, chp_slug)
+    return render(
+        request,
+        "books/chapters/write.html",
+        {"form": form, "chapter": chapter, "book": book},
     )
