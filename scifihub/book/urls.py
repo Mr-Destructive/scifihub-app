@@ -19,6 +19,16 @@ urlpatterns = [
         name="chapter-detail",
     ),
     path(
+        "b/<slug:book_slug>/chapter/<slug:chp_slug>/edit",
+        views.chapter_edit,
+        name="chapter-edit",
+    ),
+    path(
+        "b/<slug:book_slug>/chapter/<slug:chp_slug>/delete/",
+        views.chapter_delete,
+        name="chapter-delete",
+    ),
+    path(
         "b/<slug:book_slug>/chapter/<slug:chp_slug>/write/",
         views.chapeter_write,
         name="chapter-write",

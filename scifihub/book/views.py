@@ -106,6 +106,12 @@ def chapeter_write(request, book_slug, chp_slug):
         if form.is_valid():
             form.save()
             return redirect("books:chapter", book_slug, chp_slug)
+        else:
+            return render(
+                request,
+                "books/chapters/write.html",
+                {"form": form, "chapter": chapter, "book": book},
+            )
     return render(
         request,
         "books/chapters/write.html",
