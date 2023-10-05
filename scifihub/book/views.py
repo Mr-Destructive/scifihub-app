@@ -32,7 +32,7 @@ def book_create(request):
 
 
 def book_edit(request, book_slug):
-    book = Book.objects.get(slug=book_slug)
+    book = get_object_or_404(Book, slug=book_slug)
     form = BookForm(instance=book)
     if request.method == "POST":
         form = BookForm(request.POST, instance=book)
@@ -43,15 +43,16 @@ def book_edit(request, book_slug):
 
 
 def book_delete(request, book_slug):
-    book = Book.objects.get(slug=book_slug)
+    book = get_object_or_404(Book, slug=book_slug)
     if request.method == "POST":
         book.delete()
         return redirect("books:list")
     return render(request, "books/delete.html", {"book": book})
 
 
+@author_access_required
 def add_chapter(request, book_slug):
-    book = Book.objects.get(slug=book_slug)
+    book = get_object_or_404(Book, slug=book_slug)
     form = ChapterForm()
     if request.method == "POST":
         form = ChapterForm(request.POST)
@@ -59,21 +60,22 @@ def add_chapter(request, book_slug):
             chapter = form.save()
             chapter.book = book
             chapter.save()
-            return render(request, "books/chapter.html", {"chapter": chapter})
+            return render(request, "books/chapters/detail.html", {"chapter": chapter})
     return render(
-        request, "books/chapters/create-chapter.html", {"form": form, "book": book}
+        request, "books/chapters/create.html", {"form": form, "book": book}
     )
 
 
 def chapter_detail(request, book_slug, chp_slug):
-    book = Book.objects.get(slug=book_slug)
+    book = get_object_or_404(Book, slug=book_slug)
     chapter = get_object_or_404(Chapter, id=chp_slug)
-    return render(request, "books/chapter.html", {"chapter": chapter, "book": book})
+    return render(request, "books/chapters/detail.html", {"chapter": chapter, "book": book})
 
 
 def chapter_edit(request, book_slug, chp_slug):
-    book = Book.objects.get(slug=book_slug)
+    book = get_object_or_404(Book, slug=book_slug)
     chapter = get_object_or_404(Chapter, id=chp_slug)
+    form = ChapterForm(instance=chapter)
     if request.method == "POST":
         form = ChapterForm(request.POST, instance=chapter)
         if form.is_valid():
@@ -85,7 +87,7 @@ def chapter_edit(request, book_slug, chp_slug):
 
 
 def chapter_delete(request, book_slug, chp_slug):
-    book = Book.objects.get(slug=book_slug)
+    book = get_object_or_404(Book, slug=book_slug)
     chapter = get_object_or_404(Chapter, id=chp_slug)
     if request.method == "POST":
         chapter.delete()
@@ -117,3 +119,7 @@ def chapeter_write(request, book_slug, chp_slug):
         "books/chapters/write.html",
         {"form": form, "chapter": chapter, "book": book},
     )
+
+def word_count_chapter(chapter_id):
+    chapter = get_object_or_404(Chapter, id=chapter_id)
+    return len(chapter.text_content)

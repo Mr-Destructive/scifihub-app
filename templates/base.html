@@ -4,13 +4,13 @@
 <html>
     <head>
         <title>Sci-Fi Hub</title>
-        <script src="https://unpkg.com/htmx.org@1.9.5" integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" crossorigin="anonymous"></script>
+        {% include "htmx-cdn.html" %}
         {% compress css %}
-          <link rel="stylesheet" href="{% static 'src/output.css' %}">
+            <link rel="stylesheet" href="{% static 'src/output.css' %}">
         {% endcompress %}
     </head>
-    <body>
-        <h1>Sci-Fi Hub</h1>
+    <body class="bg-gray-100 font-sans">
+        <h1 class="text-4xl font-bold text-center mt-8 mb-4">Sci-Fi Hub</h1>
         {% block base %}
         {% endblock %}
     </body>
