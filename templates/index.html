@@ -2,15 +2,17 @@
 {% block base %}
     <h2>The Place where science fiction writers live</h2>
     <ul>
+        <nav class="flex justify-center bg-gray-200">
         {% if user.is_authenticated %}
-            <li><a href="{% url 'index' %}">Home</a></li>
-            <li><a href="{% url 'projects:list' %}">Projects</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li class="mr-6 text-2xl"><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'projects:list' %}">Projects</a></li>
+                <li><a href="{% url 'books:list' %}">Books</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
         {% endif %}
-
+        </nav>
     </ul>
     <div
         hx-get="{% url 'projects:list' %}"

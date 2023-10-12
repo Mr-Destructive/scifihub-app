@@ -1,7 +1,7 @@
-<h2>{{user.full_name}}'s Projects</h2>
-<a href="{% url 'projects:create' %}">Create a new project</a>
-<ul>
+<h2 class="text-3xl font-bold underline">{{user.full_name}}'s Projects</h2>
+<a class="btn btn-primary" href="{% url 'projects:create' %}">Create a new project</a>
+<ul class="list-disc list-inside">
 {% for project in projects %}
-<li><a href="{% url 'projects:detail' project.slug %}">{{ project.name }}</a></li>
+<li class="my-2"><a class="link" href="{% url 'projects:detail' project.slug %}">{{ project.name }}</a></li>
 {% endfor %}
 </ul>

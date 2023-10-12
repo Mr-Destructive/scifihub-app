@@ -1,6 +1,6 @@
-<h2>New Project</h2>
+<h2 class="text-3xl font-bold underline">New Project</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Create Project</button>
+    <button class="btn btn-primary" type="submit">Create Project</button>
 </form>
