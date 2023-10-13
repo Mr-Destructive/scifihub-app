@@ -1,0 +1,25 @@
+.borderless-text-input:focus,
+.borderless-text-input {
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  outline: none;
+  resize: none;
+}
+textarea, textarea:focus {
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  outline: none;
+  resize: none;
+}
+
+}

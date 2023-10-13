@@ -40,6 +40,6 @@ class Project(TimeStampedModel):
     def save(self, *args, **kwargs):
         project = None
         if self.id:
-            project = Project.objects.get(id=self.id)
+            project = get_object_or_404(Project, id=self.id)
         self.slug = get_or_set_slug(self, project)
         return super().save(*args, **kwargs)

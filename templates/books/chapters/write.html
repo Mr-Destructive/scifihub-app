@@ -1,4 +1,5 @@
-<form method="post" hx-post="{% url 'books:chapter-write' book.slug chapter.slug %}">
+{% include "tailwind-css.html" %}
+<form method="post" hx-post="{% url 'books:chapter-write' book.slug chapter.id %}">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Write Chapter</button>

@@ -18,8 +18,7 @@ def list_projects(request):
 @author_access_required
 def detail_project(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
-    author = request.user
-    project_books = Book.objects.filter(author=author, project_id=project.id)
+    project_books = Book.objects.filter(project_id=project.id)
     return render(
         request, "projects/detail.html", {"project": project, "books": project_books}
     )

@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 
 from scifihub.core.middlewares import author_access_required
+from scifihub.projects.models import Project
 
 from .forms import BookForm, ChapterForm, ChapterEditForm
 from .models import Book, Chapter
@@ -10,6 +11,12 @@ from .models import Book, Chapter
 def book_list(request):
     user = request.user
     books = Book.objects.filter(author=user)
+    return render(request, "books/list.html", {"books": books})
+
+@author_access_required
+def project_books(request, project_slug):
+    project = get_object_or_404(Project, slug=project_slug)
+    books = Book.objects.filter(project=project)
     return render(request, "books/list.html", {"books": books})
 
 
@@ -80,9 +87,9 @@ def chapter_edit(request, book_slug, chp_slug):
         form = ChapterForm(request.POST, instance=chapter)
         if form.is_valid():
             form.save()
-            return render(request, "books/chapter.html", {"chapter": chapter})
+            return render(request, "books/chapters/detail.html", {"book": book, "chapter": chapter})
     return render(
-        request, "books/chapters/edit-chapter.html", {"form": form, "book": book}
+            request, "books/chapters/edit.html", {"form": form, "book": book, "chapter": chapter}
     )
 
 
@@ -103,15 +110,16 @@ def chapeter_write(request, book_slug, chp_slug):
     book = get_object_or_404(Book, slug=book_slug)
     chapter = get_object_or_404(Chapter, id=chp_slug)
     form = ChapterEditForm(instance=chapter)
-    if request.method == "PATCH":
+    print(request.method)
+    if request.method == "POST":
         form = ChapterEditForm(request.POST, instance=chapter)
         if form.is_valid():
             form.save()
-            return redirect("books:chapter", book_slug, chp_slug)
+            return redirect("books:chapter-detail", book_slug, chp_slug)
         else:
             return render(
                 request,
-                "books/chapters/write.html",
+                "books/chapters/detail.html",
                 {"form": form, "chapter": chapter, "book": book},
             )
     return render(

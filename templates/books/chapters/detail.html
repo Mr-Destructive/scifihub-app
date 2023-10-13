@@ -1,2 +1,5 @@
 <p>Chapter No. {{chapter.order }} : {{ chapter.name }}</p>
+
+<a href="{% url 'books:chapter-edit' book.slug chapter.id %}">Edit</a>
+<a href="{% url 'books:chapter-write' book.slug chapter.id %}">Write</a>
 <p>{{ chapter.text_content }}</p>

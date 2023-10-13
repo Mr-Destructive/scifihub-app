@@ -1,4 +1,5 @@
 {% include "htmx-cdn.html" %}
+{% include "tailwind-css.html" %}
 <h2>{{book.name}}</h2>
 <p>{{book.description}}</p>
 <a href="{% url 'books:edit' book.slug %}">Edit</a>
@@ -7,7 +8,6 @@
 <button
     hx-get="{% url 'books:create-chapter' book.slug %}"
     hx-target="#chapters"
-    hx-swap="outerHTML"
 >Add a chapter</button>
 <div id="chapters">
 {% if chapters %}

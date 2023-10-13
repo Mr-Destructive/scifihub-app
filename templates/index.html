@@ -2,9 +2,9 @@
 {% block base %}
     <h2>The Place where science fiction writers live</h2>
     <ul>
-        <nav class="flex justify-center bg-gray-200">
+        <nav class="flex justify-center bg-white">
         {% if user.is_authenticated %}
-                <li class="mr-6 text-2xl"><a href="{% url 'index' %}">Home</a></li>
+                <li class="mr-6 text-2xl text-red"><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="{% url 'projects:list' %}">Projects</a></li>
                 <li><a href="{% url 'books:list' %}">Books</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>

@@ -1,6 +1,7 @@
-<h2 class="text-3xl font-bold underline">New Project</h2>
-<form method="post">
+{% include 'tailwind-css.html' %}
+<h2 class="">New Project</h2>
+<form class="w-full rounded-lg shadow-sm bg-white text-black" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button class="btn btn-primary" type="submit">Create Project</button>
+    <button type="submit" class="bg-green-500 font-bold py-2 px-4 rounded">Create Project</button>
 </form>

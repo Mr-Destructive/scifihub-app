@@ -1,4 +1,4 @@
-<h2 class="text-3xl font-bold underline">{{user.full_name}}'s Projects</h2>
+<h2 class="text-1xl font-bold underline">{{user.full_name}}'s Projects</h2>
 <a class="btn btn-primary" href="{% url 'projects:create' %}">Create a new project</a>
 <ul class="list-disc list-inside">
 {% for project in projects %}
