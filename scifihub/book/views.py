@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from scifihub.core.middlewares import author_access_required
 from scifihub.projects.models import Project
 
-from .forms import BookForm, ChapterForm, ChapterEditForm
+from .forms import BookForm, ChapterForm, ChapterWriteForm
 from .models import Book, Chapter
 
 
@@ -11,12 +11,17 @@ from .models import Book, Chapter
 def book_list(request):
     user = request.user
     books = Book.objects.filter(author=user)
+    if request.META.get('HTTP_HX_REQUEST'):
+        return render(request, "books/fragments/list.html", {"books": books})
     return render(request, "books/list.html", {"books": books})
+
 
 @author_access_required
 def project_books(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     books = Book.objects.filter(project=project)
+    if request.META.get('HTTP_HX_REQUEST'):
+        return render(request, "books/fragments/list.html", {"books": books}) 
     return render(request, "books/list.html", {"books": books})
 
 
@@ -24,6 +29,8 @@ def project_books(request, project_slug):
 def book_detail(request, book_slug):
     book = get_object_or_404(Book, slug=book_slug)
     chapters = book.chapters.all()
+    if request.META.get('HTTP_HX_REQUEST'):
+        return render(request, "books/fragments/detail.html", {"book": book, "chapters": chapters})
     return render(request, "books/detail.html", {"book": book, "chapters": chapters})
 
 
@@ -109,7 +116,7 @@ def chapter_delete(request, book_slug, chp_slug):
 def chapeter_write(request, book_slug, chp_slug):
     book = get_object_or_404(Book, slug=book_slug)
     chapter = get_object_or_404(Chapter, id=chp_slug)
-    form = ChapterEditForm(instance=chapter)
+    form = ChapterWriteForm(instance=chapter)
     print(request.method)
     if request.method == "POST":
         form = ChapterEditForm(request.POST, instance=chapter)
