@@ -117,9 +117,8 @@ def chapeter_write(request, book_slug, chp_slug):
     book = get_object_or_404(Book, slug=book_slug)
     chapter = get_object_or_404(Chapter, id=chp_slug)
     form = ChapterWriteForm(instance=chapter)
-    print(request.method)
-    if request.method == "POST":
-        form = ChapterEditForm(request.POST, instance=chapter)
+    if request.META.get("HTTP_HX_REQUEST"):
+        form = ChapterForm(request.POST, instance=chapter)
         if form.is_valid():
             form.save()
             return redirect("books:chapter-detail", book_slug, chp_slug)

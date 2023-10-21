@@ -43,27 +43,6 @@ class BookForm(forms.ModelForm):
             "completed_at",
         ]
 
-        widgets = {
-            "name": forms.TextInput(
-                attrs={
-                    "placeholder": "Title of the book",
-                    "class": "borderless-text-input w-full bg-transparent text-white p-2 text-lg font-medium",
-                }
-            ),
-            "genre": forms.TextInput(
-                attrs={
-                    "placeholder": "Genre of the book",
-                    "class": "borderless-text-input w-full bg-transparent text-white p-2 text-lg font-medium",
-                }
-            ),
-            "slug": forms.TextInput(
-                attrs={
-                    "placeholder": "Slug of the book",
-                    "class": "borderless-text-input w-full bg-transparent text-white p-2 text-lg font-medium",
-                }
-            ),
-        }
-
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
