@@ -1,6 +1,4 @@
-<ul>
-{% for book in books %}
-{{book.slug }}
-    <li><a href="{% url 'books:detail' book.slug %}">{{ book.name }}</a></li>
-{% endfor %}
-</ul>
+{% extends "base.html" %}
+{% block base %}
+{% include "books/fragments/list.html" %}
+{% endblock %}

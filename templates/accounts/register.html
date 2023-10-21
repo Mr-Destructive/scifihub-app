@@ -1,5 +1,28 @@
-<h2>Register for SciFiHub</h2>
-<form action="{% url 'register' %}" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Register">
-</form>
+{% extends "base.html" %}
+{% block base %}
+    <div class="container mx-auto mt-10 text-center">
+        <h2 class="text-3xl font-semibold mb-6">Register for SciFiHub</h2>
+        <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                </div>
+                <div class="mb-4">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                </div>
+                <div class="mb-4">
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
+                </div>
+                <div class="mb-4">
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
+                </div>
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Register</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

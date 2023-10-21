@@ -10,9 +10,23 @@
             <link rel="stylesheet" href="{% static 'style.css' %}">
         {% endcompress %}
     </head>
-    <body class="bg-gray-100 font-sans">
-        <h1 class="text-4xl font-bold text-center mt-8 mb-4">Sci-Fi Hub</h1>
-        {% block base %}
-        {% endblock %}
+    <body class="bg-blue-100 font-sans">
+        <header class="bg-blue-600 p-4">
+            <h1 class="text-4xl font-bold text-red-600 text-center">Sci-Fi Hub</h1>
+        </header>
+
+            <nav class="flex justify-center bg-white py-4">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'index' %}" class="px-4 text-blue-600 hover:text-blue-800">Home</a>
+                    <a href="{% url 'projects:list' %}" class="px-4 text-blue-600 hover:text-blue-800">Projects</a>
+                    <a href="{% url 'books:list' %}" class="px-4 text-blue-600 hover:text-blue-800">Books</a>
+                    <a href="{% url 'logout' %}" class="px-4 text-red-600 hover:text-red-800">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="px-4 text-blue-600 hover:text-blue-800">Login</a>
+                    <a href="{% url 'register' %}" class="px-4 text-blue-600 hover:text-blue-800">Register</a>
+                {% endif %}
+            </nav>
+                {% block base %}
+                {% endblock %}
     </body>
 </html>

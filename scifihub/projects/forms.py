@@ -4,29 +4,52 @@ from .models import Project
 
 
 class ProjectForm(forms.ModelForm):
+    name = forms.CharField(
+        max_length=128,
+        label=False,
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Title of the project",
+                "class": "borderless-text-input w-full bg-transparent text-white p-2 text-lg font-medium",
+            }
+        )
+    )
+
+    description = forms.CharField(
+        label=False,
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Description of the project",
+                "class": "borderless-text-input w-full bg-transparent text-white p-2 text-lg font-medium",
+                "rows": 3,
+            }
+        )
+    )
+
+    visibility = forms.ChoiceField(
+        label="Visibility",
+        choices=Project.visibility_types.choices,
+        widget=forms.Select(attrs={"class": "form-control"}),
+    )
+
+    status = forms.ChoiceField(
+        label="Status",
+        choices=Project.status_types.choices,
+        widget=forms.Select(attrs={"class": "form-control"}),
+    )
+
+    project_type = forms.CharField(
+        label="Project Type",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Type of the project",
+            }
+        )
+    )
+
     class Meta:
         model = Project
         exclude = ["author", "created_at", "updated_at", "completed_at", "slug"]
-
-        widgets = {
-                    "visibility": forms.RadioSelect(
-                        choices=Project.visiblity_types.choices
-                    ),
-                    "status": forms.RadioSelect(
-                        choices=Project.status_types.choices
-                    ),
-                    "name": forms.TextInput(
-                        attrs={"placeholder": "Title of the project",
-                               "class": "borderless-text-input w-full bg-transparent text-white p-2 text-lg font-medium",
-                               }
-                    ),
-                    "description": forms.Textarea(
-                        attrs={"placeholder": "Description of the project",
-                               "class": "borderless-textarea w-full bg-transparent text-black p-2 text-lg",
-                               "row": "2",
-                               }
-                    ),
-                }
 
 
 class ProjectEditForm(forms.ModelForm):

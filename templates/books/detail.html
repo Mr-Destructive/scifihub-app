@@ -1,21 +1,4 @@
-{% include "htmx-cdn.html" %}
-{% include "tailwind-css.html" %}
-<h2>{{book.name}}</h2>
-<p>{{book.description}}</p>
-<a href="{% url 'books:edit' book.slug %}">Edit</a>
-<a href="{% url 'books:delete' book.slug %}">Delete</a>
-
-<button
-    hx-get="{% url 'books:create-chapter' book.slug %}"
-    hx-target="#chapters"
->Add a chapter</button>
-<div id="chapters">
-{% if chapters %}
-    <h3>Chapters</h3>
-    {% for chapter in chapters %}
-        <a href="{% url 'books:chapter-detail' book.slug chapter.id %}">{{ chapter.name }}</a>
-    {% endfor %}
-{% else %}
-    <p>No chapters yet!</p>
-{% endif %}
-</div>
+{% extends "base.html" %}
+{% block base %}
+    {% include "books/fragments/detail.html" %}
+{% endblock %}

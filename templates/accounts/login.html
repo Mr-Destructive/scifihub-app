@@ -1,6 +1,22 @@
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Login">
-</form>
+{% extends "base.html" %}
+
+{% block base %}
+    <div class="container mx-auto mt-10 text-center">
+        <h2 class="text-3xl font-semibold mb-6">Login</h2>
+        <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                </div>
+                <div class="mb-4">
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                </div>
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Login</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

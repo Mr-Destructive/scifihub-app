@@ -1,7 +1,7 @@
-<script src="https://unpkg.com/htmx.org@1.9.5" integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" crossorigin="anonymous"></script>
+{% extends "base.html" %}
+{% block base %}
 <h2 class="text-3xl font-bold underline">{{ project.name }}</h2>
 <h3 class="text-2xl font-bold underline">Author: {{ project.author.full_name }}</h3>
-<p class="text-lg">{{ project.description }}</p>
 
 <a class="btn btn-primary" href="{% url 'projects:edit' project.slug %}">Edit</a>
 <a class="btn btn-primary" href="{% url 'projects:delete' project.slug %}">Delete</a>
@@ -13,4 +13,4 @@
     hx-trigger="load"
 ></div>
 <div id="books"></div>
-
+{% endblock %}

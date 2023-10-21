@@ -12,6 +12,8 @@ from .models import Project
 def list_projects(request):
     authot = request.user
     projects = Project.objects.filter(author=authot)
+    if request.META.get('HTTP_HX_REQUEST'):
+        return render(request, "projects/fragments/list.html", {"projects": projects})
     return render(request, "projects/list.html", {"projects": projects})
 
 
