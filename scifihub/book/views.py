@@ -90,7 +90,8 @@ def chapter_edit(request, book_slug, chp_slug):
     book = get_object_or_404(Book, slug=book_slug)
     chapter = get_object_or_404(Chapter, id=chp_slug)
     form = ChapterForm(instance=chapter)
-    if request.method == "POST":
+    if request.META.get("HTTP_HX_REQUEST") and request.method == "POST":
+        print("HERE")
         form = ChapterForm(request.POST, instance=chapter)
         if form.is_valid():
             form.save()
@@ -105,10 +106,11 @@ def chapter_delete(request, book_slug, chp_slug):
     chapter = get_object_or_404(Chapter, id=chp_slug)
     if request.method == "POST":
         chapter.delete()
-        return render(request, "books/chapter.html", {"chapter": chapter, "book": book})
+        chapters = book.chapters.all()
+        return render(request, "books/detail.html", {"chapters": chapters, "book": book})
     return render(
         request,
-        "books/chapters/delete-chapter.html",
+        "books/chapters/delete.html",
         {"chapter": chapter, "book": book},
     )
 

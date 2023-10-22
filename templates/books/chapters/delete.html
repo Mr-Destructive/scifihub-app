@@ -1,6 +1,6 @@
 <p>Are you sure you want to delete "{{ book.name }}" book's chapter "{{ chapter.name }}" ?</p>
 
-<form action="{% url 'books:chapter-delete' book.slug chapter.slug %}" method="post">
+<form action="{% url 'books:chapter-delete' book.slug chapter.id %}" method="post">
     {% csrf_token %}
     <input type="submit" value="Delete">
 </form>
