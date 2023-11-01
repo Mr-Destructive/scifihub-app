@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block base %}
+<h2 class="text-3xl font-bold underline">{{ project.name }}</h2>
+<h3 class="text-2xl font-bold underline">Author: {{ project.author.full_name }}</h3>
+
+<a class="btn btn-primary" href="{% url 'worlds:edit' world.id %}">Edit</a>
+<a class="btn btn-primary" href="{% url 'worlds:delete' world.id %}">Delete</a>
+<p>{{ world.description }}</p>
+{% endblock %}

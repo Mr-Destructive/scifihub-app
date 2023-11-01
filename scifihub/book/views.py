@@ -83,6 +83,8 @@ def add_chapter(request, book_slug):
 def chapter_detail(request, book_slug, chp_slug):
     book = get_object_or_404(Book, slug=book_slug)
     chapter = get_object_or_404(Chapter, id=chp_slug)
+    chapter = {**chapter.__dict__}
+    chapter["word_count"] = len(chapter["text_content"].split())
     return render(request, "books/chapters/detail.html", {"chapter": chapter, "book": book})
 
 
@@ -119,6 +121,8 @@ def chapeter_write(request, book_slug, chp_slug):
     book = get_object_or_404(Book, slug=book_slug)
     chapter = get_object_or_404(Chapter, id=chp_slug)
     form = ChapterWriteForm(instance=chapter)
+    chapter = {**chapter.__dict__}
+    chapter["word_count"] = len(chapter["text_content"].split())
     if request.META.get("HTTP_HX_REQUEST"):
         form = ChapterForm(request.POST, instance=chapter)
         if form.is_valid():
@@ -135,7 +139,3 @@ def chapeter_write(request, book_slug, chp_slug):
         "books/chapters/write.html",
         {"form": form, "chapter": chapter, "book": book},
     )
-
-def word_count_chapter(chapter_id):
-    chapter = get_object_or_404(Chapter, id=chapter_id)
-    return len(chapter.text_content)

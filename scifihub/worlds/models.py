@@ -68,6 +68,8 @@ class Character(models.Model):
     book = models.ForeignKey(
         Book,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
@@ -106,6 +108,17 @@ class Location(models.Model):
 class MagicSystem(models.Model):
     name = models.CharField(max_length=64)
     description = models.TextField()
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        null=True,
+    )
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
     world = models.ForeignKey(World, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):

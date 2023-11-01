@@ -1,10 +1,47 @@
 {% extends "base.html" %}
 
 {% block base %}
-    <div class="container mx-auto mt-10 text-center">
+  <div class="container ">
+    <div class="flex">
+      <aside class="w-1/4 bg-white border-r border-gray-200 shadow-md flex flex-col p-4 fixed h-screen">
+        <div class="sidebar">
+          <ul class="flex flex-col items-center justify-between h-full space-y-4">
+            <li>
+              <a href="{% url 'index' %}" class="text-lg font-bold text-blue-600 hover:text-gray-600">Sci-Fi Hub</a>
+            </li>
+            <li>
+              <a href="{% url 'projects:list' %}" class="text-base font-semibold text-gray-600 hover:text-gray-800">Projects</a>
+            </li>
+            <li>
+              <a href="{% url 'books:list' %}" class="text-base font-semibold text-gray-600 hover:text-gray-800">Books</a>
+            </li>
+            <li>
+              <a href="{% url 'worlds:magic-system-create' %}" class="text-base font-semibold text-gray-600 hover:text-gray-800">Magic-Systems</a>
+            </li>
+            <li>
+              <a href="{% url 'worlds:character-create' %}" class="text-base font-semibold text-gray-600 hover:text-gray-800">Characters</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li>
+              <a href="{% url 'logout' %}" class="text-base font-semibold text-red-600 hover:text-red-800">Logout</a>
+            </li>
+            {% else %}
+            <li>
+              <a href="{% url 'login' %}" class="text-base font-semibold text-blue-600 hover:text-blue-800">Login</a>
+            </li>
+            <li>
+              <a href="{% url 'register' %}" class="text-base font-semibold text-blue-600 hover:text-blue-800">Register</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main content moved below the sidebar -->
+      <div class="container mx-auto mt-10 px-4">
         <h2 class="text-3xl font-semibold mb-6">The Place where science fiction writers live</h2>
-    </div>
-    <div class="container mx-auto mt-6">
         <div hx-get="{% url 'projects:list' %}" hx-trigger="load" hx-swap="outerHTML"></div>
+      </div>
     </div>
+  </div>
 {% endblock %}

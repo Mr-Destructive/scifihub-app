@@ -2,6 +2,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 
 from scifihub.book.models import Book, Chapter
+from scifihub.worlds.models import World
 
 
 def author_access_required(view_func):
@@ -18,6 +19,12 @@ def author_access_required(view_func):
         if chapter_id:
             chapter = get_object_or_404(Chapter, id=chapter_id)
             if chapter.book.author != request.user:
+                raise PermissionDenied
+        
+        world_id = kwargs.get("world_id")
+        if world_id:
+            world = get_object_or_404(World, id=world_id)
+            if world.project.author != request.user:
                 raise PermissionDenied
 
         return view_func(request, *args, **kwargs)

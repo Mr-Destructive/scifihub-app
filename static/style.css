@@ -22,4 +22,12 @@ textarea, textarea:focus {
   resize: none;
 }
 
+.sidebar>ul{
+    width: 25vh;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    align-items: flex-start;
 }

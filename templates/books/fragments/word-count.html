@@ -1,0 +1,11 @@
+<div id="wordCount">Word count: {{ chapter.word_count }}</div>
+
+<script>
+  function countWords() {
+    const text = document.querySelector('#id_text_content').value;
+    const words = text.split(/\s+/).filter(word => word.length > 0);
+    const wordCount = words.length;
+    document.querySelector('#wordCount').textContent = `Word count: ${wordCount}`;
+  }
+  document.querySelector('#id_text_content').addEventListener('input', countWords);
+</script>

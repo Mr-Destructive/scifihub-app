@@ -29,10 +29,10 @@ class Book(UUIDModel, TimeStampedModel):
 
     def save(self, *args, **kwargs):
         book = None
-        if self.id and self.slug:
-            book = get_object_or_404(Book, id=self.id)
+        book = Book.objects.filter(id=self.id, slug=self.slug).first()
+        if book:
+            book = get_object_or_404(Book, slug=self.slug)
         self.slug = get_or_set_slug(self, book)
-        print(self.slug)
         return super().save(*args, **kwargs)
 
 

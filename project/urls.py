@@ -9,6 +9,7 @@ urlpatterns = [
     path("auth/", include("scifihub.author.urls")),
     path("projects/", include("scifihub.projects.urls")),
     path("books/", include("scifihub.book.urls")),
+    path("worlds/", include("scifihub.worlds.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = "scifihub.core.views.custom_404"

@@ -5,4 +5,8 @@
 <a href="{% url 'books:chapter-edit' book.slug chapter.id %}">Edit</a>
 <a href="{% url 'books:chapter-delete' book.slug chapter.id %}">Delete</a>
 <a href="{% url 'books:chapter-write' book.slug chapter.id %}">Write</a>
-<p>{{ chapter.text_content }}</p>
+
+<p>Word Count: {{ chapter.word_count }}</p>
+<div  class="m-4 pl-8 pr-8 text-gray-700 text-lg leading-relaxed font-serif text-justify max-w-3xl mx-auto">
+   {{ chapter.text_content|linebreaks }}
+</div>

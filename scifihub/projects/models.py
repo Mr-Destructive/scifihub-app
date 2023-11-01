@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import get_object_or_404
 
 from scifihub.author.models import User
 from scifihub.core.models import TimeStampedModel

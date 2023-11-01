@@ -1,0 +1,24 @@
+<div class="container mx-auto mt-10 text-center">
+    {% if not world %}
+        <h2 class="text-2xl font-bold underline">{{ user.full_name }}'s Characters</h2>
+        <a class="bg-blue-500 text-white py-2 px-4 rounded inline-block mt-4 hover:bg-blue-700" href="{% url 'worlds:character-create' project.slug %}">Create a new Character</a>
+    {% else %}
+        <h2 class="text-2xl font-bold underline"> {{ world.name }}'s Characters</h2>
+        <a class="bg-blue-500 text-white py-2 px-4 rounded inline-block mt-4 hover:bg-blue-700" href="{% url 'worlds:character-create' project.slug %}">Create a new Character</a>
+    {% endif %}
+    <div class="flex flex-wrap -mx-4 mt-4">
+        {% for character in characters %}
+            <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 p-4">
+                <div class="bg-white rounded-lg shadow-lg h-full overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2"><a class="text-blue-500 hover:underline" href="#">{{ character.name }}</a></h3>
+                        <p class="text-gray-600">{{ character.description }}</p>
+                    </div>
+                    <div class="bg-blue-500 text-white py-2 px-4 text-center">
+                    </div>
+                </div>
+            </div>
+            {% cycle "" "" "</div><div class='flex flex-wrap -mx-4 mt-4'>" %}
+        {% endfor %}
+    </div>
+</div>

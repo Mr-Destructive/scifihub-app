@@ -71,7 +71,10 @@ def create_book(request, project_slug):
             book = form.save(commit=False)
             book.author = request.user
             book.project = project
+            print(book)
             book.save()
+            print(book)
+            project.save()
             return render(request, "projects/detail.html", {"project": project})
         else:
             return render(request, "projects/create-book.html", {"form": form})
