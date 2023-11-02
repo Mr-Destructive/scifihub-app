@@ -5,22 +5,14 @@
         <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
             <form action="{% url 'register' %}" method="post">
                 {% csrf_token %}
-                <div class="mb-4">
-                    {{ form.username.label_tag }}
-                    {{ form.username }}
-                </div>
-                <div class="mb-4">
-                    {{ form.email.label_tag }}
-                    {{ form.email }}
-                </div>
-                <div class="mb-4">
-                    {{ form.password1.label_tag }}
-                    {{ form.password1 }}
-                </div>
-                <div class="mb-4">
-                    {{ form.password2.label_tag }}
-                    {{ form.password2 }}
-                </div>
+                {% for field in form %}
+                    <div class="mb-4 p-4">
+                        {% if field.label %}
+                        {{ field.label_tag }}
+                        {% endif %}
+                        {{ field }}
+                    </div>
+                {% endfor %}
                 <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Register</button>
             </form>
         </div>

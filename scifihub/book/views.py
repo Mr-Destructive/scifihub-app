@@ -11,7 +11,7 @@ from .models import Book, Chapter
 def book_list(request):
     user = request.user
     books = Book.objects.filter(author=user)
-    if request.META.get('HTTP_HX_REQUEST'):
+    if request.META.get("HTTP_HX_REQUEST"):
         return render(request, "books/fragments/list.html", {"books": books})
     return render(request, "books/list.html", {"books": books})
 
@@ -20,8 +20,8 @@ def book_list(request):
 def project_books(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     books = Book.objects.filter(project=project)
-    if request.META.get('HTTP_HX_REQUEST'):
-        return render(request, "books/fragments/list.html", {"books": books}) 
+    if request.META.get("HTTP_HX_REQUEST"):
+        return render(request, "books/fragments/list.html", {"books": books})
     return render(request, "books/list.html", {"books": books})
 
 
@@ -29,8 +29,10 @@ def project_books(request, project_slug):
 def book_detail(request, book_slug):
     book = get_object_or_404(Book, slug=book_slug)
     chapters = book.chapters.all()
-    if request.META.get('HTTP_HX_REQUEST'):
-        return render(request, "books/fragments/detail.html", {"book": book, "chapters": chapters})
+    if request.META.get("HTTP_HX_REQUEST"):
+        return render(
+            request, "books/fragments/detail.html", {"book": book, "chapters": chapters}
+        )
     return render(request, "books/detail.html", {"book": book, "chapters": chapters})
 
 
@@ -75,9 +77,7 @@ def add_chapter(request, book_slug):
             chapter.book = book
             chapter.save()
             return render(request, "books/chapters/detail.html", {"chapter": chapter})
-    return render(
-        request, "books/chapters/create.html", {"form": form, "book": book}
-    )
+    return render(request, "books/chapters/create.html", {"form": form, "book": book})
 
 
 def chapter_detail(request, book_slug, chp_slug):
@@ -85,7 +85,9 @@ def chapter_detail(request, book_slug, chp_slug):
     chapter = get_object_or_404(Chapter, id=chp_slug)
     chapter = {**chapter.__dict__}
     chapter["word_count"] = len(chapter["text_content"].split())
-    return render(request, "books/chapters/detail.html", {"chapter": chapter, "book": book})
+    return render(
+        request, "books/chapters/detail.html", {"chapter": chapter, "book": book}
+    )
 
 
 def chapter_edit(request, book_slug, chp_slug):
@@ -93,13 +95,18 @@ def chapter_edit(request, book_slug, chp_slug):
     chapter = get_object_or_404(Chapter, id=chp_slug)
     form = ChapterForm(instance=chapter)
     if request.META.get("HTTP_HX_REQUEST") and request.method == "POST":
-        print("HERE")
         form = ChapterForm(request.POST, instance=chapter)
         if form.is_valid():
             form.save()
-            return render(request, "books/chapters/detail.html", {"book": book, "chapter": chapter})
+            return render(
+                request,
+                "books/chapters/detail.html",
+                {"book": book, "chapter": chapter},
+            )
     return render(
-            request, "books/chapters/edit.html", {"form": form, "book": book, "chapter": chapter}
+        request,
+        "books/chapters/edit.html",
+        {"form": form, "book": book, "chapter": chapter},
     )
 
 
@@ -109,7 +116,9 @@ def chapter_delete(request, book_slug, chp_slug):
     if request.method == "POST":
         chapter.delete()
         chapters = book.chapters.all()
-        return render(request, "books/detail.html", {"chapters": chapters, "book": book})
+        return render(
+            request, "books/detail.html", {"chapters": chapters, "book": book}
+        )
     return render(
         request,
         "books/chapters/delete.html",
@@ -121,10 +130,8 @@ def chapeter_write(request, book_slug, chp_slug):
     book = get_object_or_404(Book, slug=book_slug)
     chapter = get_object_or_404(Chapter, id=chp_slug)
     form = ChapterWriteForm(instance=chapter)
-    chapter = {**chapter.__dict__}
-    chapter["word_count"] = len(chapter["text_content"].split())
     if request.META.get("HTTP_HX_REQUEST"):
-        form = ChapterForm(request.POST, instance=chapter)
+        form = ChapterWriteForm(request.POST, instance=chapter)
         if form.is_valid():
             form.save()
             return redirect("books:chapter-detail", book_slug, chp_slug)
@@ -134,6 +141,8 @@ def chapeter_write(request, book_slug, chp_slug):
                 "books/chapters/detail.html",
                 {"form": form, "chapter": chapter, "book": book},
             )
+    chapter = {**chapter.__dict__}
+    chapter["word_count"] = len(chapter["text_content"].split())
     return render(
         request,
         "books/chapters/write.html",

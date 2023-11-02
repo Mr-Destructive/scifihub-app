@@ -12,7 +12,7 @@ from .models import Project
 def list_projects(request):
     authot = request.user
     projects = Project.objects.filter(author=authot)
-    if request.META.get('HTTP_HX_REQUEST'):
+    if request.META.get("HTTP_HX_REQUEST"):
         return render(request, "projects/fragments/list.html", {"projects": projects})
     return render(request, "projects/list.html", {"projects": projects})
 
@@ -32,7 +32,10 @@ def create_project(request):
         if form.is_valid():
             project = form.save(commit=False)
             project.author = request.user
-            project.save()
+            try:
+                project.save()
+            except Exception as e:
+                print(e)
             return render(request, "projects/detail.html", {"project": project})
     else:
         form = ProjectForm()

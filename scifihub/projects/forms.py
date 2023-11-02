@@ -12,9 +12,8 @@ class ProjectForm(forms.ModelForm):
                 "placeholder": "Title of the project",
                 "class": "borderless-text-input w-full bg-transparent text-white p-2 text-lg font-medium",
             }
-        )
+        ),
     )
-
     description = forms.CharField(
         label=False,
         widget=forms.Textarea(
@@ -23,9 +22,8 @@ class ProjectForm(forms.ModelForm):
                 "class": "borderless-text-input w-full bg-transparent text-white p-2 text-lg font-medium",
                 "rows": 3,
             }
-        )
+        ),
     )
-
     visibility = forms.ChoiceField(
         label="Visibility",
         choices=Project.visibility_types.choices,
@@ -39,12 +37,13 @@ class ProjectForm(forms.ModelForm):
     )
 
     project_type = forms.CharField(
+        max_length=128,
         label="Project Type",
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Type of the project",
             }
-        )
+        ),
     )
 
     class Meta:
