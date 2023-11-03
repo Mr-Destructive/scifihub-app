@@ -2,29 +2,107 @@
 {% load static %}
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <title>Sci-Fi Hub</title>
-        {% include "htmx-cdn.html" %}
-            <link rel="stylesheet" href="{% static 'src/output.css' %}">
-            <link rel="stylesheet" href="{% static 'style.css' %}">
-    </head>
-    <body class="bg-blue-100 font-sans">
-        <header class="bg-blue-600 p-4">
-            <h1 class="text-4xl font-bold text-red-600 text-center">Sci-Fi Hub</h1>
-        </header>
+<head>
+    <title>Sci-Fi Hub</title>
+    {% include "htmx-cdn.html" %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="">
+<div class="flex flex-col md:flex-row h-screen">
+    <div class="w-64 bg-white dark:bg-gray-800 p-4 border-r md:overflow-auto">
+        <h2 class="text-2xl font-semibold mb-6"><a href="{% url 'index' %}">Sci-Fi Hub</a></h2>
+        <nav>
+            <a class="flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="{% url 'projects:list' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                    <path d="m16 6 4 14"></path>
+                    <path d="M12 6v14"></path>
+                    <path d="M8 8v12"></path>
+                    <path d="M4 4v16"></path>
+                </svg>
+                <span>Projects</span>
+            </a>
+            <a class="flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="{% url 'books:list' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                </svg>
+                <span>Books</span>
+            </a>
+            <a class="flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                </svg>
+                <span>Chapters</span>
+            </a>
+            <a class="flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                    <path d="M20 22h-2"></path>
+                    <path d="M20 15v2h-2"></path>
+                    <path d="M4 19.5V15"></path>
+                    <path d="M20 8v3"></path>
+                    <path d="M18 2h2v2"></path>
+                    <path d="M4 11V9"></path>
+                    <path d="M12 2h2"></path>
+                    <path d="M12 22h2"></path>
+                    <path d="M12 17h2"></path>
+                    <path d="M8 22H6.5a2.5 2.5 0 0 1 0-5H8"></path>
+                    <path d="M4 5v-.5A2.5 2.5 0 0 1 6.5 2H8"></path>
+                </svg>
+                <span>Manuscripts</span>
+            </a>
+            <a class="flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" x2="22" y1="12" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                <span>Worlds</span>
+            </a>
+            <a class="flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                    <path d="m6 15-4-4 6.75-6.77a7.79 7.79 0 0 1 11 11L13 22l-4-4 6.39-6.36a2.14 2.14 0 0 0-3-3L6 15"></path>
+                    <path d="m5 8 4 4"></path>
+                    <path d="m12 15 4 4"></path>
+                </svg>
+                <span>Magic Systems</span>
+            </a>
+        </nav>
+    </div>
+    <div id="theme-toggle" class="fixed top-4 right-4 z-50">
+        <select id="theme-select" class="p-2 bg-gray-200 dark:bg-gray-800 rounded">
+            <option value="light">Light</option>
+            <option value="dark">Night</option>
+            <option value="evening">Evening</option>
+            <option value="noon">Noon</option>
+        </select>
+    </div>
 
-            <nav class="flex justify-center bg-white py-4">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'index' %}" class="px-4 text-blue-600 hover:text-blue-800">Home</a>
-                    <a href="{% url 'projects:list' %}" class="px-4 text-blue-600 hover:text-blue-800">Projects</a>
-                    <a href="{% url 'books:list' %}" class="px-4 text-blue-600 hover:text-blue-800">Books</a>
-                    <a href="{% url 'logout' %}" class="px-4 text-red-600 hover:text-red-800">Logout</a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="px-4 text-blue-600 hover:text-blue-800">Login</a>
-                    <a href="{% url 'register' %}" class="px-4 text-blue-600 hover:text-blue-800">Register</a>
-                {% endif %}
-            </nav>
-                {% block base %}
-                {% endblock %}
+  <script>
+    const themeToggle = document.getElementById('theme-select');
+    const html = document.body;
+
+    themeToggle.addEventListener('change', () => {
+        if (themeToggle.value === 'light') {
+          html.className = 'bg-gray-100 ';
+        }
+        else if (themeToggle.value === 'dark') {
+          html.className = 'bg-black text-grey-100';
+        }
+        else if (themeToggle.value === 'evening') {
+          html.className = 'bg-orange-500 text-black';
+        }
+        else if (themeToggle.value === 'noon') {
+          html.className = 'bg-yellow-400 text-black';
+        }
+        else {
+          html.className = 'day';
+        }
+    });
+
+  </script>
+        {% block base %}
+        {% endblock %}
+</div>
     </body>
 </html>

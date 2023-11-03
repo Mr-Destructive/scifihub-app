@@ -1,9 +1,15 @@
 {% extends "base.html" %}
-{% block base %} 
-<form method="post" hx-post="{% url 'books:chapter-write' book.slug chapter.id %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% include "books/fragments/word-count.html" %}
-    <button class="btn btn-primary" type="submit">Write Chapter</button>
-</form>
+{% block base %}
+    <span class="text-sm text-gray-500">Word count: {{ chapter.word_count }}</span>
+    <main class="flex gap-4 p-4 md:gap-8 md:p-6 ">
+        <form >
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="px-4 py-2 flex justify-between items-center">
+                <button class="inline-flex items-center justify-center text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
+                    Write Chapter
+                </button>
+            </div>
+        </form>
+    </main>
 {% endblock %}

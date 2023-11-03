@@ -95,6 +95,9 @@ class ChapterWriteForm(ModelForm):
             attrs={
                 "placeholder": "Content of the chapter",
                 "class": "borderless-textinput",
+                "style": "width: 60vw; height: 75vh",
+                "hx-post": "#",
+                "hx-trigger": "blur",
             }
         )
     )

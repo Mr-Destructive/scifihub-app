@@ -1,19 +1,31 @@
-<h2>{{book.name}}</h2>
-<p>{{book.description}}</p>
-<a href="{% url 'books:edit' book.slug %}">Edit</a>
-<a href="{% url 'books:delete' book.slug %}">Delete</a>
-
-<button
-    hx-get="{% url 'books:create-chapter' book.slug %}"
-    hx-target="#chapters"
->Add a chapter</button>
-<div id="chapters">
-{% if chapters %}
-    <h3>Chapters</h3>
-    {% for chapter in chapters %}
-        <a hx-get="{% url 'books:chapter-detail' book.slug chapter.id %}">{{ chapter.name }}</a>
-    {% endfor %}
-{% else %}
-    <p>No chapters yet!</p>
-{% endif %}
+<div class="container mx-auto p-4">
+  <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-semibold text-gray-800"><a href="{% url 'books:detail' book.slug %}">{{ book.name }}</a></h2>
+    <p class="text-gray-600">{{ book.description }}</p>
+    <div class="mt-4 flex gap-2">
+      <a href="{% url 'books:edit' book.slug %}" class="text-blue-500 hover:underline cursor-pointer">Edit</a>
+      <a href="{% url 'books:delete' book.slug %}" class="text-red-500 hover:underline cursor-pointer">Delete</a>
+    </div>
+    <button
+      hx-get="{% url 'books:create-chapter' book.slug %}"
+      hx-target="#chapters"
+      class="mt-4 px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none cursor-pointer"
+    >
+      Add a chapter
+    </button>
+    <div id="chapters" class="mt-6">
+      {% if chapters %}
+        <h3 class="text-lg font-semibold text-gray-800">Chapters</h3>
+        <ul class="mt-2 list-disc list-inside">
+          {% for chapter in chapters %}
+            <li>
+              <a hx-get="{% url 'books:chapter-detail' book.slug chapter.id %}" hx-target="#chapters" hx-swap="innerHTML" class="cursor-pointer text-blue-500">{{ chapter.name }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-gray-600">No chapters yet!</p>
+      {% endif %}
+    </div>
+  </div>
 </div>
