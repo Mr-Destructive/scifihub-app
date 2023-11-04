@@ -1,0 +1,6 @@
+{% include 'tailwind-css.html' %}
+<form method="post" hx-post="{% url 'books:manuscript-create' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Manuscript</button>
+</form>

@@ -15,24 +15,35 @@ def world_list(request):
     for world in worlds:
         project = world.project
         projects.append(project)
-    if request.META.get('HTTP_HX_REQUEST'):
-        return render(request, "world/fragments/list.html", {"worlds": worlds, "projects": projects})
+    if request.META.get("HTTP_HX_REQUEST"):
+        return render(
+            request,
+            "world/fragments/list.html",
+            {"worlds": worlds, "projects": projects},
+        )
     return render(request, "worlds/list.html", {"worlds": worlds, "projects": projects})
+
 
 @author_access_required
 def project_worlds(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     worlds = World.objects.filter(project=project)
-    if request.META.get('HTTP_HX_REQUEST'):
-        return render(request, "world/fragments/list.html", {"worlds": worlds, "project": project}) 
+    if request.META.get("HTTP_HX_REQUEST"):
+        return render(
+            request, "world/fragments/list.html", {"worlds": worlds, "project": project}
+        )
     return render(request, "worlds/list.html", {"worlds": worlds})
+
 
 @author_access_required
 def world_detail(request, world_id):
     world = get_object_or_404(World, id=world_id)
-    if request.META.get('HTTP_HX_REQUEST'):
+    if request.META.get("HTTP_HX_REQUEST"):
         return render(request, "world/fragments/detail.html", {"world": world})
-    return render(request, "worlds/detail.html", {"world": world, "project": world.project})
+    return render(
+        request, "worlds/detail.html", {"world": world, "project": world.project}
+    )
+
 
 @author_access_required
 def world_create(request):
@@ -49,6 +60,7 @@ def world_create(request):
         form = WorldForm()
         return render(request, "worlds/create.html", {"form": form})
 
+
 @author_access_required
 def world_edit(request, world_id):
     world = get_object_or_404(World, id=world_id)
@@ -59,6 +71,7 @@ def world_edit(request, world_id):
             form.save()
             return redirect("worlds:list")
     return render(request, "worlds/edit.html", {"world": world, "form": form})
+
 
 @author_access_required
 def world_delete(request, world_id):
@@ -72,16 +85,32 @@ def world_delete(request, world_id):
 @author_access_required
 def characters(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
-    characters = Character.objects.filter(project__author=request.user, project__slug=project_slug)
-    if request.META.get('HTTP_HX_REQUEST'):
-        return render(request, "worlds/characters/fragments/list.html", {"character": characters, "project": project})
-    return render(request, "worlds/characters/list.html", {"project": project, "characters": characters})
+    characters = Character.objects.filter(
+        project__author=request.user, project__slug=project_slug
+    )
+    if request.META.get("HTTP_HX_REQUEST"):
+        return render(
+            request,
+            "worlds/characters/fragments/list.html",
+            {"character": characters, "project": project},
+        )
+    return render(
+        request,
+        "worlds/characters/list.html",
+        {"project": project, "characters": characters},
+    )
+
 
 @author_access_required
 def character_detail(request, world_id, character_id):
     world = get_object_or_404(World, id=world_id)
     character = get_object_or_404(world.characters.all(), id=character_id)
-    return render(request, "worlds/characters/detail.html", {"world": world, "character": character})
+    return render(
+        request,
+        "worlds/characters/detail.html",
+        {"world": world, "character": character},
+    )
+
 
 @author_access_required
 def character_create(request):
@@ -90,7 +119,7 @@ def character_create(request):
         if form.is_valid():
             character = form.save(commit=False)
             character.save()
-            return redirect("worlds:characters", project_slug)
+            return redirect("worlds:characters")
         else:
             return render(request, "worlds/characters/create.html", {"form": form})
     else:
@@ -101,22 +130,54 @@ def character_create(request):
 def character_edit(request, world_id, character_id):
     pass
 
+
 def character_delete(request, world_id, character_id):
     pass
 
+
 @author_access_required
-def magic_systems(request, project_slug):
+def magic_systems(request):
+    magic_systems = MagicSystem.objects.filter(project__author=request.user)
+    if request.META.get("HTTP_HX_REQUEST"):
+        return render(
+            request,
+            "worlds/magic-systems/fragments/list.html",
+            {"magic_systems": magic_systems},
+        )
+    return render(
+        request, "worlds/magic-systems/list.html", {"magic_systems": magic_systems}
+    )
+
+
+@author_access_required
+def project_magic_systems(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
-    magic_systems = MagicSystem.objects.filter(project__author=request.user, project__slug=project_slug)
-    if request.META.get('HTTP_HX_REQUEST'):
-        return render(request, "worlds/magic-systems/fragments/list.html", {"project": project, "magic_systems": magic_systems})
-    return render(request, "worlds/magic-systems/list.html", {"project": project, "magic_systems": magic_systems})
+    magic_systems = MagicSystem.objects.filter(
+        project__author=request.user, project__slug=project_slug
+    )
+    if request.META.get("HTTP_HX_REQUEST"):
+        return render(
+            request,
+            "worlds/magic-systems/fragments/list.html",
+            {"project": project, "magic_systems": magic_systems},
+        )
+    return render(
+        request,
+        "worlds/magic-systems/list.html",
+        {"project": project, "magic_systems": magic_systems},
+    )
+
 
 @author_access_required
 def magic_system_detail(request, world_id, magic_system_id):
     world = get_object_or_404(World, id=world_id)
     magic_system = get_object_or_404(world.magic_systems.all(), id=magic_system_id)
-    return render(request, "worlds/magic-system_detail.html", {"world": world, "magic_system": magic_system})
+    return render(
+        request,
+        "worlds/magic-system_detail.html",
+        {"world": world, "magic_system": magic_system},
+    )
+
 
 @author_access_required
 def magic_system_create(request):

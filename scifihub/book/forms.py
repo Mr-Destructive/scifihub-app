@@ -1,7 +1,9 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Book, Chapter
+from scifihub.projects.models import Project
+
+from .models import Book, Chapter, Manuscript
 
 
 class BookForm(forms.ModelForm):
@@ -22,7 +24,7 @@ class BookForm(forms.ModelForm):
                 "placeholder": "Genre of the book",
                 "class": "borderless-text-input w-full bg-transparent text-white p-2 text-lg font-medium",
             }
-        )
+        ),
     )
     slug = forms.CharField(
         label=False,
@@ -33,7 +35,7 @@ class BookForm(forms.ModelForm):
             }
         ),
     )
-    
+
     class Meta:
         model = Book
         exclude = [
@@ -49,6 +51,7 @@ class BookForm(forms.ModelForm):
         if user:
             self.fields["project"].queryset = Project.objects.filter(author=user)
 
+
 class ChapterForm(ModelForm):
     text_content = forms.CharField(
         label=False,
@@ -57,7 +60,7 @@ class ChapterForm(ModelForm):
                 "placeholder": "Content of the chapter",
                 "class": "borderless-textinput",
             }
-        )
+        ),
     )
     name = forms.CharField(
         max_length=128,
@@ -80,7 +83,6 @@ class ChapterForm(ModelForm):
             "section",
         ]
 
-
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
@@ -99,9 +101,34 @@ class ChapterWriteForm(ModelForm):
                 "hx-post": "#",
                 "hx-trigger": "blur",
             }
-        )
+        ),
     )
+
     class Meta:
         model = Chapter
-        fields = ["text_content",]
+        fields = [
+            "text_content",
+        ]
 
+
+class ManuscriptForm(ModelForm):
+    slug = forms.CharField(
+        label=False,
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Slug of the manuscript",
+                "class": "borderless-text-input w-full bg-transparent text-white p-2 text-lg font-medium",
+            }
+        ),
+    )
+
+    class Meta:
+        model = Manuscript
+        fields = ["name", "book", "slug"]
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields["book"].queryset = Book.objects.filter(author=user)

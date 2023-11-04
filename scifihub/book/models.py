@@ -36,9 +36,35 @@ class Book(UUIDModel, TimeStampedModel):
         return super().save(*args, **kwargs)
 
 
+class Manuscript(UUIDModel, TimeStampedModel):
+    name = models.CharField(max_length=128)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="manuscripts")
+    slug = models.SlugField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        manuscript = None
+        manuscript = Manuscript.objects.filter(id=self.id, slug=self.slug).first()
+        print(manuscript)
+        if manuscript:
+            manuscript = get_object_or_404(Manuscript, slug=self.slug)
+        print(manuscript)
+        self.slug = get_or_set_slug(self, manuscript)
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.slug
+
+
 class Section(UUIDModel, TimeStampedModel):
     name = models.CharField(max_length=128)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="sections")
+    manuscript = models.ForeignKey(
+        "Manuscript",
+        on_delete=models.CASCADE,
+        related_name="sections",
+        null=True,
+        blank=True,
+    )
     order = models.PositiveSmallIntegerField()
 
     class Meta:

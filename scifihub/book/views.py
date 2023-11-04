@@ -3,8 +3,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from scifihub.core.middlewares import author_access_required
 from scifihub.projects.models import Project
 
-from .forms import BookForm, ChapterForm, ChapterWriteForm
-from .models import Book, Chapter
+from .forms import BookForm, ChapterForm, ChapterWriteForm, ManuscriptForm
+from .models import Book, Chapter, Manuscript
 
 
 @author_access_required
@@ -149,3 +149,42 @@ def chapeter_write(request, book_slug, chp_slug):
         "books/chapters/write.html",
         {"form": form, "chapter": chapter, "book": book},
     )
+
+
+def create_manuscript(request):
+    form = ManuscriptForm()
+    if request.method == "POST":
+        form = ManuscriptForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("books:manuscripts")
+    return render(
+        request,
+        "books/manuscripts/create.html",
+        {"form": form},
+    )
+
+
+@author_access_required
+def manuscripts(request):
+    manuscripts = Manuscript.objects.filter(book__author=request.user)
+    if request.META.get("HTTP_HX_REQUEST"):
+        return render(
+            request,
+            "books/fragments/manuscripts-list.html",
+            {"manuscripts": manuscripts},
+        )
+    return render(request, "books/manuscripts/list.html", {"manuscripts": manuscripts})
+
+
+@author_access_required
+def book_manuscripts(request, book_slug):
+    book = get_object_or_404(Book, slug=book_slug)
+    manuscripts = Manuscript.objects.filter(book=book)
+    if request.META.get("HTTP_HX_REQUEST"):
+        return render(
+            request,
+            "books/fragments/manuscripts-list.html",
+            {"manuscripts": manuscripts},
+        )
+    return render(request, "books/manuscripts/list.html", {"manuscripts": manuscripts})
