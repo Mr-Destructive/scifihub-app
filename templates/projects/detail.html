@@ -7,7 +7,7 @@
 <a class="btn btn-primary" href="{% url 'projects:delete' project.slug %}">Delete</a>
 <a class="btn btn-primary" href="{% url 'projects:worlds:project-worlds' project.slug %}">Worlds</a>
 <a class="btn btn-primary" href="{% url 'worlds:characters' project.slug %}">Characters</a>
-<a class="btn btn-primary" href="{% url 'worlds:magic-systems' project.slug %}">Magic Systems</a>
+<a class="btn btn-primary" href="{% url 'worlds:project-magic-systems' project.slug %}">Magic Systems</a>
 <a class="btn btn-primary" href="{% url 'projects:create-book' project.slug %}">Add a book</a>
 <div
     hx-get="{% url 'books:project-books' project.slug %}"

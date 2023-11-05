@@ -76,7 +76,7 @@ def add_chapter(request, book_slug):
             chapter = form.save()
             chapter.book = book
             chapter.save()
-            return render(request, "books/chapters/detail.html", {"chapter": chapter})
+            return redirect("books:detail", book_slug)
     return render(request, "books/chapters/create.html", {"form": form, "book": book})
 
 
