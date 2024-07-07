@@ -2,34 +2,141 @@
 
 {% block base %}
     <div class="flex-1 p-6 overflow-auto">
-
-        <h1 class="text-3xl font-bold mb-4">Dashboard</h1>
-<h2 class="text-3xl font-bold mb-4">Welcome, {{ user.full_name }}!</h2>
-        <div class="grid grid-cols-2 gap-4">
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-2">Projects</h2>
-                <p class="text-gray-700 dark:text-gray-300">Manage your projects here</p>
+        {% if request.user.is_authenticated %}
+            <h1 class="text-3xl font-bold mb-4">Dashboard</h1>
+            <h2 class="text-3xl font-bold mb-4">Welcome, {{ user.full_name }}!</h2>
+            <div class="grid grid-cols-2 gap-4">
+<a href="{% url 'projects:list' %}" class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow flex flex-col items-center justify-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-6 w-6 text-gray-400 dark:text-gray-300 mb-4"
+      >
+        <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        <rect width="20" height="14" x="2" y="6" rx="2"></rect>
+      </svg>
+    <h2 class="text-xl font-semibold mb-2">Projects</h2>
+    <p class="text-gray-700 dark:text-gray-300">Manage your projects here</p>
+</a>
+                <a href="{% url 'books:list' %}" class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow flex flex-col items-center justify-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-6 w-6 text-gray-400 dark:text-gray-300 mb-4"
+      >
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+      </svg>
+                    <h2 class="text-xl font-semibold mb-2">Books</h2>
+                    <p class="text-gray-700 dark:text-gray-300">Manage your books here</p>
+                </a>
+                <a href="{% url 'worlds:list' %}" class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow flex flex-col items-center justify-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-6 w-6 text-gray-400 dark:text-gray-300 mb-4"
+      >
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+        <path d="M2 12h20"></path>
+      </svg>
+                    <h2 class="text-xl font-semibold mb-2">Worlds</h2>
+                    <p class="text-gray-700 dark:text-gray-300">Manage your worlds here</p>
+                </a>
+                <a href="{% url 'worlds:magic-systems' %}" class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow flex flex-col items-center justify-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-6 w-6 text-gray-400 dark:text-gray-300 mb-4"
+      >
+        <path d="M15 4V2"></path>
+        <path d="M15 16v-2"></path>
+        <path d="M8 9h2"></path>
+        <path d="M20 9h2"></path>
+        <path d="M17.8 11.8 19 13"></path>
+        <path d="M15 9h0"></path>
+        <path d="M17.8 6.2 19 5"></path>
+        <path d="m3 21 9-9"></path>
+        <path d="M12.2 6.2 11 5"></path>
+      </svg>
+                    <h2 class="text-xl font-semibold mb-2">Magic Systems</h2>
+                    <p class="text-gray-700 dark:text-gray-300">Manage your magic systems here</p>
+                </a>
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow flex flex-col items-center justify-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-6 w-6 text-gray-400 dark:text-gray-300 mb-4"
+      >
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+      </svg>
+                    <h2 class="text-xl font-semibold mb-2">Chapters</h2>
+                    <p class="text-gray-700 dark:text-gray-300">Manage your chapters here</p>
+                </div>
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow flex flex-col items-center justify-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-6 w-6 text-gray-400 dark:text-gray-300 mb-4"
+      >
+        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+        <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+        <path d="M10 9H8"></path>
+        <path d="M16 13H8"></path>
+        <path d="M16 17H8"></path>
+      </svg>
+                    <h2 class="text-xl font-semibold mb-2">Manuscripts</h2>
+                    <p class="text-gray-700 dark:text-gray-300">Manage your manuscripts here</p>
+                </div>
             </div>
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-2">Books</h2>
-                <p class="text-gray-700 dark:text-gray-300">Manage your books here</p>
+        {% else %}
+            <div class="mt-auto">
+                <a class="block py-2 px-4 bg-blue-500 text-white rounded-md text-center mb-2 hover:bg-blue-600" href="{% url 'login' %}">Login</a>
+                <a class="block py-2 px-4 bg-gray-300 text-gray-800 rounded-md text-center hover:bg-gray-400" href="{% url 'register' %}">Register</a>
             </div>
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-2">Chapters</h2>
-                <p class="text-gray-700 dark:text-gray-300">Manage your chapters here</p>
-            </div>
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-2">Manuscripts</h2>
-                <p class="text-gray-700 dark:text-gray-300">Manage your manuscripts here</p>
-            </div>
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-2">Worlds</h2>
-                <p class="text-gray-700 dark:text-gray-300">Manage your worlds here</p>
-            </div>
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-2">Magic Systems</h2>
-                <p class="text-gray-700 dark:text-gray-300">Manage your magic systems here</p>
-            </div>
-        </div>
+        {% endif %}
     </div>
 {% endblock %}

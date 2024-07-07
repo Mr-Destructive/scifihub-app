@@ -1,6 +1,8 @@
 from django import forms
 from django.forms import ModelForm
 
+from django_ckeditor_5.widgets import CKEditor5Widget
+
 from scifihub.projects.models import Project
 
 from .models import Book, Chapter, Manuscript
@@ -28,6 +30,7 @@ class BookForm(forms.ModelForm):
     )
     slug = forms.CharField(
         label=False,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Slug of the book",
@@ -46,7 +49,7 @@ class BookForm(forms.ModelForm):
         ]
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop("user", None)
+        user = kwargs.pop("author", None)
         super().__init__(*args, **kwargs)
         if user:
             self.fields["project"].queryset = Project.objects.filter(author=user)
@@ -83,21 +86,16 @@ class ChapterForm(ModelForm):
             "section",
         ]
 
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop("user", None)
-        super().__init__(*args, **kwargs)
-        if user:
-            self.fields["project"].queryset = Chapter.objects.filter(author=user)
 
 
 class ChapterWriteForm(ModelForm):
-    text_content = forms.CharField(
+
+    text_content= forms.CharField(
         label=False,
-        widget=forms.Textarea(
+        widget=CKEditor5Widget(
             attrs={
+                "class": "django_ckeditor_5",
                 "placeholder": "Content of the chapter",
-                "class": "borderless-textinput",
-                "style": "width: 60vw; height: 75vh",
                 "hx-post": "#",
                 "hx-trigger": "blur",
             }

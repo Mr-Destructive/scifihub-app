@@ -1,3 +1,4 @@
+from slugify import slugify
 from django.shortcuts import get_object_or_404, redirect, render
 
 from scifihub.core.middlewares import author_access_required
@@ -37,14 +38,19 @@ def book_detail(request, book_slug):
 
 
 def book_create(request):
+    form = BookForm(author=request.user)
     if request.method == "POST":
         form = BookForm(request.POST)
         if form.is_valid():
-            form.save()
+            book = form.save(commit=False)
+            book.author_id = request.user.id
+            if not book.slug and book.name:
+                book.slug = slugify(book.name)
+            book.save()
             return redirect("books:list")
         else:
             return render(request, "books/create.html", {"form": form})
-    return render(request, "books/create.html")
+    return render(request, "books/create.html", {"form": form})
 
 
 def book_edit(request, book_slug):
@@ -142,6 +148,11 @@ def chapeter_write(request, book_slug, chp_slug):
                 "books/chapters/detail.html",
                 {"form": form, "chapter": chapter, "book": book},
             )
+    elif request.method == "POST":
+        form = ChapterWriteForm(request.POST, instance=chapter)
+        if form.is_valid():
+            form.save()
+            return redirect("books:chapter-detail", book_slug, chp_slug)
     chapter = {**chapter.__dict__}
     chapter["word_count"] = len(chapter["text_content"].split())
     return render(

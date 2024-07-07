@@ -19,7 +19,7 @@ urlpatterns = [
         "manuscripts/<slug:book_slug>/", views.book_manuscripts, name="book-manuscripts"
     ),
     path(
-        "b/<slug:book_slug>/create/chapter/", views.add_chapter, name="create-chapter"
+        "book/<slug:book_slug>/create/chapter/", views.add_chapter, name="create-chapter"
     ),
     path(
         "b/<slug:book_slug>/chapter/<slug:chp_slug>/",

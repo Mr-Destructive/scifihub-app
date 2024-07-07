@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_htmx",
     "compressor",
+    'django_ckeditor_5',
     "scifihub.author",
     "scifihub.book",
     "scifihub.core",
@@ -115,6 +116,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "author.User"
 
+LOGIN_URL = "auth/login/"
 LOGIN_REDIRECT_URL = "/"
 
 STATIC_URL = "/static/"
@@ -130,3 +132,12 @@ STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 )
+
+
+CKEDITOR_5_CONFIGS = {
+  'default': {
+      'toolbar': ['heading', '|', 'bold', 'italic', 'link',
+                  'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
+
+  },
+}

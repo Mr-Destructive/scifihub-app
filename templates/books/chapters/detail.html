@@ -14,7 +14,7 @@
     <p class="text-gray-600">Word Count: {{ chapter.word_count }}</p>
     
     <div class="mt-4 pl-8 pr-8 text-gray-700 text-lg leading-relaxed font-serif text-justify max-w-3xl mx-auto">
-      {{ chapter.text_content|linebreaks }}
+      {{ chapter.text_content|safe|linebreaks }}
     </div>
   </div>
 </div>

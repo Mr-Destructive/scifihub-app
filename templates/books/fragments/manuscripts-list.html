@@ -1,6 +1,6 @@
 <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     {% if not manuscripts %}
-        <h2 class="text-2xl font-bold underline">{{ user.full_name }}'s Manuscripts</h2>
+        <h2 class="text-2xl font-bold underline">All Manuscripts</h2>
         <a class="bg-blue-500 text-white py-2 px-4 rounded inline-block mt-4 hover:bg-blue-700" href="{% url 'books:manuscript-create' %}">Create a new Manuscript</a>
     {% else %}
   {% for manuscript in manuscripts %}
