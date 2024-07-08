@@ -56,12 +56,12 @@ class BookForm(forms.ModelForm):
 
 
 class ChapterForm(ModelForm):
-    text_content = forms.CharField(
+    text_content= forms.CharField(
         label=False,
-        widget=forms.Textarea(
+        widget=TinyMCE(
             attrs={
+                "id": "id_text_content",
                 "placeholder": "Content of the chapter",
-                "class": "borderless-textinput",
             }
         ),
     )

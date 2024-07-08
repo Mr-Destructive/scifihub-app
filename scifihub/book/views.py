@@ -92,7 +92,7 @@ def chapter_detail(request, book_slug, chp_slug):
     chapter = {**chapter.__dict__}
     chapter["word_count"] = len(chapter["text_content"].split())
     return render(
-        request, "books/chapters/detail.html", {"chapter": chapter, "book": book}
+        request, "books/fragments/chapter_detail.html", {"chapter": chapter, "book": book}
     )
 
 
@@ -106,9 +106,14 @@ def chapter_edit(request, book_slug, chp_slug):
             form.save()
             return render(
                 request,
-                "books/chapters/detail.html",
+                "books/fragments/chapter_detail.html",
                 {"book": book, "chapter": chapter},
             )
+    elif request.method == "POST":
+        form = ChapterForm(request.POST, instance=chapter)
+        if form.is_valid():
+            form.save()
+            return redirect("books:chapter-detail", book_slug, chp_slug)
     return render(
         request,
         "books/chapters/edit.html",

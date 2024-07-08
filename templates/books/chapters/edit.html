@@ -2,6 +2,7 @@
 {% block base %}
 <form method="post" hx-post="{% url 'books:chapter-edit' book.slug chapter.id %}">
     {% csrf_token %}
+    {{ form.media }}
     {{ form.as_p }}
     <button type="submit">Edit Chapter</button>
 </form>

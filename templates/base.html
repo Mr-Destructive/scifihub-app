@@ -1,17 +1,20 @@
 {% load compress %}
 {% load static %}
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensure proper scaling on mobile -->
     <title>Sci-Fi Hub</title>
     {% include "htmx-cdn.html" %}
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="">
-<div class="flex flex-col md:flex-row h-screen">
-    <div class="w-64 bg-white dark:bg-gray-800 p-4 border-r md:overflow-auto">
+<body class=""> <!-- Set default background color -->
+
+<div class="flex flex-col md:flex-row h-screen"> <!-- Flex container, column layout on mobile, row layout on medium screens and above -->
+    <div class="w-full md:w-64 bg-white dark:bg-gray-800 p-4 border-r md:block hidden"> <!-- Sidebar width on medium screens and above, hidden on smaller screens -->
         <h2 class="text-2xl font-semibold mb-6"><a href="{% url 'index' %}">Sci-Fi Hub</a></h2>
         <nav>
             <a class="flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="{% url 'projects:list' %}">
@@ -63,40 +66,58 @@
             </a>
         </nav>
     </div>
-    <div id="theme-toggle" class="fixed top-4 right-4 z-50">
-        <select id="theme-select" class="p-2 bg-gray-200 dark:bg-gray-800 rounded">
-            <option value="light">Light</option>
-            <option value="dark">Night</option>
-            <option value="evening">Evening</option>
-            <option value="noon">Noon</option>
-        </select>
-    </div>
+    <div class="flex-1">
+        <div id="theme-toggle" class="fixed top-4 right-4 z-50"> <!-- Theme toggle select box -->
+            <select id="theme-select" class="p-2 bg-gray-200 dark:bg-gray-800 rounded">
+                <option value="light">Light</option>
+                <option value="dark">Night</option>
+                <option value="evening">Evening</option>
+                <option value="noon">Noon</option>
+            </select>
+        </div>
 
-  <script>
+<style>
+    /* Theme colors */
+    .light {
+        background-color: #f1f1f1; /* Light gray */
+        color: #333; /* Dark text */
+    }
+    .dark {
+        background-color: #333; /* Dark gray */
+        color: #fff; /* Light text */
+    }
+    .evening {
+        background-color: #ff8c00; /* Orange */
+        color: #333; /* Dark text */
+    }
+    .noon {
+        background-color: #ffd700; /* Yellow */
+        color: #333; /* Dark text */
+    }
+</style>
+<script>
+    // Theme toggle script
     const themeToggle = document.getElementById('theme-select');
-    const html = document.body;
+    const html = document.documentElement; // Use document.documentElement to target <html>
 
     themeToggle.addEventListener('change', () => {
-        if (themeToggle.value === 'light') {
-          html.className = 'bg-gray-100 ';
-        }
-        else if (themeToggle.value === 'dark') {
-          html.className = 'bg-black text-grey-100';
-        }
-        else if (themeToggle.value === 'evening') {
-          html.className = 'bg-orange-500 text-black';
-        }
-        else if (themeToggle.value === 'noon') {
-          html.className = 'bg-yellow-400 text-black';
-        }
-        else {
-          html.className = 'day';
-        }
+        const selectedTheme = themeToggle.value;
+
+        // Remove all existing theme classes first
+        html.classList.remove('light', 'dark', 'evening', 'noon');
+
+        // Add the selected theme class
+        html.classList.add(selectedTheme);
     });
 
-  </script>
-        {% block base %}
-        {% endblock %}
-</div>
+    // Initial theme based on the select box value
+    const initialTheme = themeToggle.value;
+    html.classList.add(initialTheme); // Set initial theme class on page load
+</script>
+        <div class="p-4"> <!-- Padding for content -->
+            {% block base %}
+            {% endblock %}
+        </div>
+    </div>
     </body>
 </html>
