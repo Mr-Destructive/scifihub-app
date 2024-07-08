@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_htmx",
     "compressor",
-    'django_ckeditor_5',
+    'tinymce',
     "scifihub.author",
     "scifihub.book",
     "scifihub.core",
@@ -133,11 +133,3 @@ STATICFILES_FINDERS = (
     "compressor.finders.CompressorFinder",
 )
 
-
-CKEDITOR_5_CONFIGS = {
-  'default': {
-      'toolbar': ['heading', '|', 'bold', 'italic', 'link',
-                  'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
-
-  },
-}

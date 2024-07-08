@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from django_ckeditor_5.widgets import CKEditor5Widget
+from tinymce.widgets import TinyMCE
 
 from scifihub.projects.models import Project
 
@@ -92,12 +92,12 @@ class ChapterWriteForm(ModelForm):
 
     text_content= forms.CharField(
         label=False,
-        widget=CKEditor5Widget(
+        widget=TinyMCE(
             attrs={
-                "class": "django_ckeditor_5",
+                "id": "id_text_content",
                 "placeholder": "Content of the chapter",
                 "hx-post": "#",
-                "hx-trigger": "blur",
+                "hx-trigger": "every 60s",
             }
         ),
     )
