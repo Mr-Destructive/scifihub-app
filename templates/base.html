@@ -14,7 +14,7 @@
 <body class=""> <!-- Set default background color -->
 
 <div class="flex flex-col md:flex-row h-screen"> <!-- Flex container, column layout on mobile, row layout on medium screens and above -->
-    <div class="w-full md:w-64 bg-white dark:bg-gray-800 p-4 border-r md:block hidden"> <!-- Sidebar width on medium screens and above, hidden on smaller screens -->
+    <div class="w-full md:w-64 p-4 border-r md:block hidden"> <!-- Sidebar width on medium screens and above, hidden on smaller screens -->
         <h2 class="text-2xl font-semibold mb-6"><a href="{% url 'index' %}">Sci-Fi Hub</a></h2>
         <nav>
             <a class="flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="{% url 'projects:list' %}">
@@ -91,7 +91,7 @@
         color: #333; /* Dark text */
     }
     .noon {
-        background-color: #ffd700; /* Yellow */
+        background-color: #FFF9B0; /* Yellow */
         color: #333; /* Dark text */
     }
 </style>
@@ -108,11 +108,17 @@
 
         // Add the selected theme class
         html.classList.add(selectedTheme);
+
+        // Store the selected theme in localStorage
+        localStorage.setItem('selectedTheme', selectedTheme);
     });
 
-    // Initial theme based on the select box value
-    const initialTheme = themeToggle.value;
-    html.classList.add(initialTheme); // Set initial theme class on page load
+    // Initialize theme based on stored value in localStorage
+    const storedTheme = localStorage.getItem('selectedTheme');
+    if (storedTheme) {
+        html.classList.add(storedTheme);
+        themeToggle.value = storedTheme; // Set the select box value to match stored theme
+    }
 </script>
         <div class="p-4"> <!-- Padding for content -->
             {% block base %}
