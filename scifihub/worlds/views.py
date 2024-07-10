@@ -57,7 +57,7 @@ def world_create(request):
         else:
             return render(request, "worlds/create.html", {"form": form})
     else:
-        form = WorldForm()
+        form = WorldForm(author=request.user)
         return render(request, "worlds/create.html", {"form": form})
 
 
@@ -113,11 +113,13 @@ def character_detail(request, world_id, character_id):
 
 
 @author_access_required
-def character_create(request):
+def character_create(request, project_slug):
+    project = get_object_or_404(Project, slug=project_slug)
     if request.method == "POST":
         form = CharacterForm(request.POST)
         if form.is_valid():
             character = form.save(commit=False)
+            character.project = project
             character.save()
             return redirect("worlds:characters")
         else:

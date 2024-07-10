@@ -3,12 +3,137 @@
 <h2 class="text-3xl font-bold underline">{{ project.name }}</h2>
 <h3 class="text-2xl font-bold underline">Author: {{ project.author.full_name }}</h3>
 
-<a class="btn btn-primary" href="{% url 'projects:edit' project.slug %}">Edit</a>
-<a class="btn btn-primary" href="{% url 'projects:delete' project.slug %}">Delete</a>
-<a class="btn btn-primary" href="{% url 'projects:worlds:project-worlds' project.slug %}">Worlds</a>
-<a class="btn btn-primary" href="{% url 'worlds:characters' project.slug %}">Characters</a>
-<a class="btn btn-primary" href="{% url 'worlds:project-magic-systems' project.slug %}">Magic Systems</a>
-<a class="btn btn-primary" href="{% url 'projects:create-book' project.slug %}">Add a book</a>
+<div class="flex gap-2">
+  <a
+    class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+    href="{% url 'projects:edit' project.slug %}"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="mr-2 h-5 w-5"
+    >
+      <path d="M12 22h6a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v10"></path>
+      <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+      <path d="M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z"></path>
+    </svg>
+    Edit
+  </a>
+  <a
+    class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+    href="{% url 'projects:delete' project.slug %}"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="mr-2 h-5 w-5"
+    >
+      <path d="M3 6h18"></path>
+      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+    </svg>
+    Delete
+  </a>
+  <a
+    class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+    href="{% url 'projects:worlds:project-worlds' project.slug %}"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="mr-2 h-5 w-5"
+    >
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+      <path d="M2 12h20"></path>
+    </svg>
+    Worlds
+  </a>
+  <a
+    class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+    href="{% url 'worlds:characters' project.slug %}"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="mr-2 h-5 w-5"
+    >
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </svg>
+    Characters
+  </a>
+  <a
+    class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+    href="{% url 'worlds:project-magic-systems' project.slug %}"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="mr-2 h-5 w-5"
+    >
+      <path d="m6 15-4-4 6.75-6.77a7.79 7.79 0 0 1 11 11L13 22l-4-4 6.39-6.36a2.14 2.14 0 0 0-3-3L6 15"></path>
+      <path d="m5 8 4 4"></path>
+      <path d="m12 15 4 4"></path>
+    </svg>
+    Magic Systems
+  </a>
+  <a
+    class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+    href="{% url 'projects:create-book' project.slug %}"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="mr-2 h-5 w-5"
+    >
+      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+    </svg>
+    Add a book
+  </a>
+</div>
 <div
     hx-get="{% url 'books:project-books' project.slug %}"
     hx-swap="innerHTML"

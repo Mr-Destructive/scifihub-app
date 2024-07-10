@@ -44,7 +44,7 @@ def book_create(request):
         if form.is_valid():
             book = form.save(commit=False)
             book.author_id = request.user.id
-            if not book.slug and book.name:
+            if not book.slug:
                 book.slug = slugify(book.name)
             book.save()
             return redirect("books:list")

@@ -16,7 +16,7 @@ class Project(TimeStampedModel):
         draft = "draft", "Draft"
 
     name = models.CharField(max_length=128)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     visibility = models.CharField(
         max_length=128,
@@ -29,7 +29,7 @@ class Project(TimeStampedModel):
         default=status_types.draft,
         null=True,
     )
-    project_type = models.CharField(max_length=128, null=True)
+    project_type = models.CharField(max_length=128, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     completed_at = models.DateTimeField(null=True, blank=True)
@@ -40,11 +40,9 @@ class Project(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         project = None
-        print(self.__dict__)
         if self.id:
             project = get_object_or_404(Project, id=self.id)
         self.slug = get_or_set_slug(self, project)
-        print(self.__dict__)
         try:
             return super().save(*args, **kwargs)
         except Exception as e:

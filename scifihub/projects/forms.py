@@ -16,6 +16,7 @@ class ProjectForm(forms.ModelForm):
     )
     description = forms.CharField(
         label=False,
+        required=False,
         widget=forms.Textarea(
             attrs={
                 "placeholder": "Description of the project",
@@ -39,6 +40,7 @@ class ProjectForm(forms.ModelForm):
     project_type = forms.CharField(
         max_length=128,
         label="Project Type",
+        required=False,
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Type of the project",

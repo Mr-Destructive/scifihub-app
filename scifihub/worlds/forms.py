@@ -1,4 +1,5 @@
 from django import forms
+from scifihub.projects.models import Project
 from scifihub.worlds.models import Character, MagicSystem, World
 
 
@@ -34,6 +35,12 @@ class WorldForm(forms.ModelForm):
             "completed_at",
         ]
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("author", None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields["project"].queryset = Project.objects.filter(author=user)
+
 class CharacterForm(forms.ModelForm):
     name = forms.CharField(
         max_length=128,
@@ -68,6 +75,12 @@ class CharacterForm(forms.ModelForm):
             "completed_at",
         ]
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields["project"].queryset = Project.objects.filter(author=user)
+
 class MagicSystemForm(forms.ModelForm):
     name = forms.CharField(
         max_length=128,
@@ -87,3 +100,9 @@ class MagicSystemForm(forms.ModelForm):
             "updated_at",
             "completed_at",
         ]
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields["project"].queryset = Project.objects.filter(author=user)

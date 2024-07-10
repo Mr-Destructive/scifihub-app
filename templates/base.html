@@ -10,11 +10,13 @@
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="{% static 'icon.jpeg' %}">
+
 </head>
 <body class=""> <!-- Set default background color -->
 
 <div class="flex flex-col md:flex-row h-screen"> <!-- Flex container, column layout on mobile, row layout on medium screens and above -->
-    <div class="w-full md:w-64 p-4 border-r md:block hidden"> <!-- Sidebar width on medium screens and above, hidden on smaller screens -->
+    <div class="w-full md:w-64 p-4 border-r md:block hidden" style="background-color: var(--color-bg-light); color: var(--color-text-dark);">
         <h2 class="text-2xl font-semibold mb-6"><a href="{% url 'index' %}">Sci-Fi Hub</a></h2>
         <nav>
             <a class="flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="{% url 'projects:list' %}">
@@ -96,9 +98,8 @@
     }
 </style>
 <script>
-    // Theme toggle script
     const themeToggle = document.getElementById('theme-select');
-    const html = document.documentElement; // Use document.documentElement to target <html>
+    const html = document.documentElement;
 
     themeToggle.addEventListener('change', () => {
         const selectedTheme = themeToggle.value;
@@ -117,10 +118,15 @@
     const storedTheme = localStorage.getItem('selectedTheme');
     if (storedTheme) {
         html.classList.add(storedTheme);
-        themeToggle.value = storedTheme; // Set the select box value to match stored theme
+        themeToggle.value = storedTheme;
     }
 </script>
-        <div class="p-4"> <!-- Padding for content -->
+        <div class="">
+            {% if request.path != '/' %}
+                <a href="javascript:history.back()">
+                    <svg height="38" viewBox="0 0 48 48" width="38" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"/><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"/></svg>
+                </a>
+            {% endif %}
             {% block base %}
             {% endblock %}
         </div>

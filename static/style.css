@@ -31,3 +31,47 @@ textarea, textarea:focus {
     flex-wrap: nowrap;
     align-items: flex-start;
 }
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.back-button:hover {
+    background-color: #e0e0e0;
+}
+
+:root {
+    --color-bg-light: #f1f1f1; /* Light gray */
+    --color-text-dark: #333; /* Dark text */
+    --color-bg-dark: #333; /* Dark gray */
+    --color-text-light: #fff; /* Light text */
+    --color-bg-evening: #ff8c00; /* Orange */
+    --color-bg-noon: #FFF9B0; /* Yellow */
+}
+
+html {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-dark);
+}
+
+html.dark {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+}
+
+html.evening {
+    background-color: var(--color-bg-evening);
+    color: var(--color-text-dark);
+}
+
+html.noon {
+    background-color: var(--color-bg-noon);
+    color: var(--color-text-dark);
+}
