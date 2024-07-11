@@ -63,9 +63,12 @@ class ChapterForm(ModelForm):
             attrs={
                 "id": "id_text_content",
                 "placeholder": "Content of the chapter",
+                "hx-post": "#",
+                "hx-trigger": "every 60s",
             }
         ),
     )
+
     name = forms.CharField(
         max_length=128,
         label=False,

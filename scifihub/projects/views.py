@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render
+from slugify.slugify import slugify
 
 from scifihub.book.forms import BookForm
 from scifihub.book.models import Book
@@ -74,13 +75,13 @@ def create_book(request, project_slug):
             book = form.save(commit=False)
             book.author = request.user
             book.project = project
-            print(book)
+            if not book.slug:
+                book.slug = slugify(book.name)
             book.save()
-            print(book)
             project.save()
             return render(request, "projects/detail.html", {"project": project})
         else:
             return render(request, "projects/create-book.html", {"form": form})
     else:
-        form = BookForm()
+        form = BookForm(author=request.user)
         return render(request, "projects/create-book.html", {"form": form})

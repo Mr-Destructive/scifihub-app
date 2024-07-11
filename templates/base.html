@@ -16,7 +16,7 @@
 <body class=""> <!-- Set default background color -->
 
 <div class="flex flex-col md:flex-row h-screen"> <!-- Flex container, column layout on mobile, row layout on medium screens and above -->
-    <div class="w-full md:w-64 p-4 border-r md:block hidden" style="background-color: var(--color-bg-light); color: var(--color-text-dark);">
+    <div class="w-full md:w-64 p-4 border-r md:block hidden">
         <h2 class="text-2xl font-semibold mb-6"><a href="{% url 'index' %}">Sci-Fi Hub</a></h2>
         <nav>
             <a class="flex items-center gap-2 mb-4 text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="{% url 'projects:list' %}">
