@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block base %}
+    <div class="container mx-auto mt-10 text-center">
+        <h2 class="text-3xl font-semibold mb-6">Your Profile</h2>
+        <div class="max-w-md mx-auto p-8 rounded-lg shadow-lg">
+            <p class="text-lg">Username: {{ user.username }}</p>
+        </div>
+        <div class="max-w-md mx-auto p-8 rounded-lg shadow-lg">
+            <p class="text-lg">Projects: {{ projects }}</p>
+            <p class="text-lg">Books: {{ books }}</p>
+            <p class="text-lg">Worlds: {{ worlds }}</p>
+            <p class="text-lg">Characters: {{ characters }}</p>
+            <p class="text-lg">Magic Systems: {{ magic_systems }}</p>
+            <p class="text-lg">Word Count: {{ word_count }}</p>
+        </div>
+{% endblock %}
+

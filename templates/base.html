@@ -69,7 +69,7 @@
         </nav>
     </div>
     <div class="flex-1">
-        <div id="theme-toggle" class="fixed top-4 right-4 z-50"> <!-- Theme toggle select box -->
+        <div id="theme-toggle" class="fixed top-4 right-20 z-50"> <!-- Theme toggle select box -->
             <select id="theme-select" class="p-2 bg-gray-200 dark:bg-gray-800 rounded">
                 <option value="light">Light</option>
                 <option value="dark">Night</option>
@@ -77,6 +77,19 @@
                 <option value="noon">Noon</option>
             </select>
         </div>
+    {% if user.is_authenticated %}
+        <div  class="fixed top-4 right-1 z-50">
+        <a href="{% url 'profile' %}" style="text-decoration: none; color: inherit; display: inline-block;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #007bff; display: flex; justify-content: center; align-items: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                    <circle cx="12" cy="7" r="4"></circle>
+                    <path d="M2 20c0-5 4-9 9-9s9 4 9 9"></path>
+                </svg>
+            </div>
+                <p >{{ user.username }}</p>
+        </a>
+        </div>
+    {% endif %}
 
 <style>
     /* Theme colors */
