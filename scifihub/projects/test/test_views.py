@@ -13,13 +13,13 @@ from ..views import (
 )
 from ..forms import ProjectForm, ProjectEditForm
 
+
 class ProjectViewsTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Create a test user
         cls.user = User.objects.create_user(
-            username='testuser',
-            password='testpassword'
+            username="testuser", password="testpassword"
         )
 
     def setUp(self):
@@ -28,13 +28,13 @@ class ProjectViewsTest(TestCase):
     def test_list_projects_view(self):
         # Create a test project associated with the test user
         project = Project.objects.create(
-            name='Test Project',
-            description='This is a test project',
+            name="Test Project",
+            description="This is a test project",
             author=self.user,
         )
 
         # Create a request
-        request = self.factory.get(reverse('projects:list'))
+        request = self.factory.get(reverse("projects:list"))
         request.user = self.user
 
         # Call the view function
@@ -43,17 +43,16 @@ class ProjectViewsTest(TestCase):
         # Check if the response status code is 200
         self.assertEqual(response.status_code, 200)
 
-
     def test_detail_project_view(self):
         # Create a test project associated with the test user
         project = Project.objects.create(
-            name='Test Project',
-            description='This is a test project',
+            name="Test Project",
+            description="This is a test project",
             author=self.user,
         )
 
         # Create a request
-        request = self.factory.get(reverse('projects:detail', args=[project.slug]))
+        request = self.factory.get(reverse("projects:detail", args=[project.slug]))
         request.user = self.user
 
         # Call the view function
@@ -62,10 +61,9 @@ class ProjectViewsTest(TestCase):
         # Check if the response status code is 200
         self.assertEqual(response.status_code, 200)
 
-
     def test_create_project_view(self):
         # Create a request
-        request = self.factory.get(reverse('projects:create'))
+        request = self.factory.get(reverse("projects:create"))
         request.user = self.user
 
         # Call the view function
@@ -74,17 +72,16 @@ class ProjectViewsTest(TestCase):
         # Check if the response status code is 200
         self.assertEqual(response.status_code, 200)
 
-
     def test_update_project_view(self):
         # Create a test project associated with the test user
         project = Project.objects.create(
-            name='Test Project',
-            description='This is a test project',
+            name="Test Project",
+            description="This is a test project",
             author=self.user,
         )
 
         # Create a request
-        request = self.factory.get(reverse('projects:edit', args=[project.slug]))
+        request = self.factory.get(reverse("projects:edit", args=[project.slug]))
         request.user = self.user
 
         # Call the view function
@@ -93,17 +90,16 @@ class ProjectViewsTest(TestCase):
         # Check if the response status code is 200
         self.assertEqual(response.status_code, 200)
 
-
     def test_delete_project_view(self):
         # Create a test project associated with the test user
         project = Project.objects.create(
-            name='Test Project',
-            description='This is a test project',
+            name="Test Project",
+            description="This is a test project",
             author=self.user,
         )
 
         # Create a request
-        request = self.factory.get(reverse('projects:delete', args=[project.slug]))
+        request = self.factory.get(reverse("projects:delete", args=[project.slug]))
         request.user = self.user
 
         # Call the view function
@@ -112,17 +108,16 @@ class ProjectViewsTest(TestCase):
         # Check if the response status code is 200
         self.assertEqual(response.status_code, 200)
 
-
     def test_create_book_view(self):
         # Create a test project associated with the test user
         project = Project.objects.create(
-            name='Test Project',
-            description='This is a test project',
+            name="Test Project",
+            description="This is a test project",
             author=self.user,
         )
 
         # Create a request
-        request = self.factory.get(reverse('projects:create-book', args=[project.slug]))
+        request = self.factory.get(reverse("projects:create-book", args=[project.slug]))
         request.user = self.user
 
         # Call the view function
@@ -130,4 +125,3 @@ class ProjectViewsTest(TestCase):
 
         # Check if the response status code is 200
         self.assertEqual(response.status_code, 200)
-

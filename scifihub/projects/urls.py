@@ -11,6 +11,5 @@ urlpatterns = [
     path("p/update/<slug:project_slug>/", views.update_project, name="edit"),
     path("p/delete/<slug:project_slug>/", views.delete_project, name="delete"),
     path("p/create-book/<slug:project_slug>/", views.create_book, name="create-book"),
-
     path("worlds/", include("scifihub.worlds.urls")),
 ]

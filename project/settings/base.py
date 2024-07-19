@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_htmx",
     "compressor",
-    'tinymce',
+    "tinymce",
     "scifihub.author",
     "scifihub.book",
     "scifihub.core",
@@ -132,4 +132,3 @@ STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 )
-

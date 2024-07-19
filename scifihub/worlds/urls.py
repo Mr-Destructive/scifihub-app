@@ -16,7 +16,11 @@ urlpatterns = [
     path("edit/<int:world_id>/", views.world_edit, name="edit"),
     path("delete/<int:world_id>/", views.world_delete, name="delete"),
     path("characters/list/<slug:project_slug>/", views.characters, name="characters"),
-    path("characters/<slug:project_slug>/create/", views.character_create, name="character-create"),
+    path(
+        "characters/<slug:project_slug>/create/",
+        views.character_create,
+        name="character-create",
+    ),
     path(
         "characters/<slug:character_slug>/",
         views.character_detail,

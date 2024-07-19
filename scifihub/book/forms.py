@@ -57,7 +57,7 @@ class BookForm(forms.ModelForm):
 
 
 class ChapterForm(ModelForm):
-    text_content= forms.CharField(
+    text_content = forms.CharField(
         label=False,
         widget=TinyMCE(
             attrs={
@@ -91,10 +91,8 @@ class ChapterForm(ModelForm):
         ]
 
 
-
 class ChapterWriteForm(ModelForm):
-
-    text_content= forms.CharField(
+    text_content = forms.CharField(
         label=False,
         widget=TinyMCE(
             attrs={

@@ -7,24 +7,38 @@ import django.utils.timezone
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('author', '0002_usermetric'),
+        ("author", "0002_usermetric"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='DailyMetric',
+            name="DailyMetric",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField(default=django.utils.timezone.now)),
-                ('word_count', models.IntegerField(default=0)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='daily_metrics', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField(default=django.utils.timezone.now)),
+                ("word_count", models.IntegerField(default=0)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="daily_metrics",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Daily Metric',
-                'verbose_name_plural': 'Daily Metrics',
-                'unique_together': {('user', 'date')},
+                "verbose_name": "Daily Metric",
+                "verbose_name_plural": "Daily Metrics",
+                "unique_together": {("user", "date")},
             },
         ),
     ]

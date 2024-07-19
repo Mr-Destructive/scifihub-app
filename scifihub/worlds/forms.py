@@ -21,8 +21,7 @@ class WorldForm(forms.ModelForm):
                 "placeholder": "Description of the world",
                 "class": "borderless-text-input w-full bg-transparent text-white p-2 text-lg font-medium",
             }
-        )
-
+        ),
     )
     world_type = forms.SelectMultiple()
 
@@ -40,6 +39,7 @@ class WorldForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if user:
             self.fields["project"].queryset = Project.objects.filter(author=user)
+
 
 class CharacterForm(forms.ModelForm):
     name = forms.CharField(
@@ -61,11 +61,9 @@ class CharacterForm(forms.ModelForm):
                 "placeholder": "Nickname of the character",
                 "class": "borderless-text-input w-full bg-transparent text-white p-2 text-lg font-medium",
             }
-        )
+        ),
     )
-    character_type = forms.ChoiceField(
-        choices=Character.character_types.choices
-    )
+    character_type = forms.ChoiceField(choices=Character.character_types.choices)
 
     class Meta:
         model = Character
@@ -80,6 +78,7 @@ class CharacterForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if user:
             self.fields["project"].queryset = Project.objects.filter(author=user)
+
 
 class MagicSystemForm(forms.ModelForm):
     name = forms.CharField(

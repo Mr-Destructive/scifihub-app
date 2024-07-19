@@ -92,7 +92,9 @@ def chapter_detail(request, book_slug, chp_slug):
     chapter = {**chapter.__dict__}
     chapter["word_count"] = len(chapter["text_content"].split())
     return render(
-        request, "books/fragments/chapter_detail.html", {"chapter": chapter, "book": book}
+        request,
+        "books/fragments/chapter_detail.html",
+        {"chapter": chapter, "book": book},
     )
 
 

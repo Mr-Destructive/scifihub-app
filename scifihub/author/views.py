@@ -36,12 +36,12 @@ def profile(request):
         word_count = UserMetric.objects.get(user=user).total_word_count
         if not DailyMetric.objects.filter(user=user).first():
             DailyMetric.objects.create(user=user)
-        daily_metrics = DailyMetric.objects.filter(user=user).order_by('date')
-        
-        labels = [metric.date.strftime('%Y-%m-%d') for metric in daily_metrics]
+        daily_metrics = DailyMetric.objects.filter(user=user).order_by("date")
+
+        labels = [metric.date.strftime("%Y-%m-%d") for metric in daily_metrics]
         daily_metrics = [randint(0, 100) for _ in range(365)]
         data = [metric for metric in daily_metrics]
-        
+
         response = {
             "username": request.user.username,
             "projects": len(projects),
@@ -50,9 +50,9 @@ def profile(request):
             "characters": len(characters),
             "magic_systems": len(magic_systems),
             "word_count": word_count,
-            'user': user,
-            'daily_metrics': daily_metrics,
-            'labels': labels,
-            'data': data,
+            "user": user,
+            "daily_metrics": daily_metrics,
+            "labels": labels,
+            "data": data,
         }
         return render(request, "accounts/profile.html", context=response)

@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("book", "0001_initial"),
         ("worlds", "0001_initial"),
