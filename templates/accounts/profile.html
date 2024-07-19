@@ -3,10 +3,10 @@
 {% block base %}
     <div class="container mx-auto mt-10 text-center">
         <h2 class="text-3xl font-semibold mb-6">Your Profile</h2>
+        
+        <!-- Display user information -->
         <div class="max-w-md mx-auto p-8 rounded-lg shadow-lg">
             <p class="text-lg">Username: {{ user.username }}</p>
-        </div>
-        <div class="max-w-md mx-auto p-8 rounded-lg shadow-lg">
             <p class="text-lg">Projects: {{ projects }}</p>
             <p class="text-lg">Books: {{ books }}</p>
             <p class="text-lg">Worlds: {{ worlds }}</p>
@@ -14,5 +14,57 @@
             <p class="text-lg">Magic Systems: {{ magic_systems }}</p>
             <p class="text-lg">Word Count: {{ word_count }}</p>
         </div>
-{% endblock %}
+        
+        <!-- Canvas element for Chart.js -->
+        <div class="max-w-md mx-auto p-8 rounded-lg shadow-lg mt-8">
+            <canvas id="dailyWordCountChart"></canvas>
+        </div>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('dailyWordCountChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: {{ labels|safe }},
+                    datasets: [{
+                        label: 'Daily Word Count',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        data: {{ data|safe }},
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                parser: 'YYYY-MM-DD',
+                                tooltipFormat: 'll',
+                                unit: 'day',
+                                unitStepSize: 1,
+                                displayFormats: {
+                                    day: 'MMM D',
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Word Count'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}
