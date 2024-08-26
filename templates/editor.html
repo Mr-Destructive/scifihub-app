@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block base %}
+    <main class="flex gap-4 p-4 md:gap-8 md:p-6">
+        <form method="post" class="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+        </form>
+    </main>
+    <script>
+        const themeToggle = document.getElementById('theme-select');
+
+        themeToggle.addEventListener('change', () => {
+            const selectedTheme = themeToggle.value;
+            changeIframeTheme(selectedTheme);
+        });
+
+        function changeIframeTheme(theme) {
+            const iframe = document.getElementById('id_text_content_ifr');
+            const iframeDoc = iframe.contentWindow.document;
+
+            // Remove existing styles if any
+            const existingStyle = iframeDoc.getElementById('iframe-custom-style');
+            if (existingStyle) {
+                existingStyle.parentNode.removeChild(existingStyle);
+            }
+
+            // Create a new style element
+            const style = iframeDoc.createElement('style');
+            style.id = 'iframe-custom-style';
+            style.textContent = `
+                body {
+                    color: #333; /* Default dark text */
+                }
+                .light body {
+                    color: #333; /* Dark text on light background */
+                }
+                .dark body {
+                    color: #fff; /* Light text on dark background */
+                }
+                .evening body {
+                    color: #333; /* Dark text on evening background */
+                }
+                .noon body {
+                    color: #333; /* Dark text on noon background */
+                }
+            `;
+
+            iframeDoc.head.appendChild(style);
+            iframeDoc.body.classList.remove('light', 'dark', 'evening', 'noon'); // Remove existing theme classes
+            iframeDoc.body.classList.add(theme); // Add the selected theme class
+        }
+        const initialTheme = themeToggle.value;
+        changeIframeTheme(initialTheme);
+    </script>
+{% endblock %}
